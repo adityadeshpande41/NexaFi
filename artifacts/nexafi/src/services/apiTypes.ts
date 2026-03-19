@@ -4,14 +4,15 @@ export interface Citation {
   url?: string;
 }
 
+// State from backend: known/inferred are objects, missing is string[]
 export interface UserState {
-  known: string[];
-  inferred: string[];
+  known: Record<string, unknown> | string[];
+  inferred: Record<string, unknown> | string[];
   missing: string[];
 }
 
 export interface WorkflowCard {
-  type: 'action' | 'info' | 'alert';
+  type: string; // backend sends "market_summary", "support_steps", etc.
   title: string;
   items: string[];
 }
@@ -35,7 +36,7 @@ export interface ChatResponse {
   confidence: number;
   latency_ms: number;
   citations: Citation[];
-  state: UserState;
+  state: UserState | null;
   workflow_card?: WorkflowCard;
 }
 

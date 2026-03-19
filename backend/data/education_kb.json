@@ -1,0 +1,58 @@
+[
+  {
+    "id": "edu_001",
+    "title": "What is an ETF?",
+    "doc_type": "education",
+    "intent_category": "education_basic",
+    "keywords": ["etf", "exchange traded fund", "index fund"],
+    "content": "An ETF (Exchange-Traded Fund) is a basket of securities — like stocks or bonds — that trades on an exchange just like a single stock. ETFs typically track an index (e.g. S&P 500) and offer diversification at low cost. Unlike mutual funds, ETFs can be bought and sold throughout the trading day at market prices."
+  },
+  {
+    "id": "edu_002",
+    "title": "What is a stock?",
+    "doc_type": "education",
+    "intent_category": "education_basic",
+    "keywords": ["stock", "share", "equity", "ownership"],
+    "content": "A stock represents a share of ownership in a company. When you buy a stock, you become a partial owner (shareholder) and may benefit from the company's growth through price appreciation and dividends. Stocks are traded on exchanges like the NYSE or NASDAQ."
+  },
+  {
+    "id": "edu_003",
+    "title": "What is a bond?",
+    "doc_type": "education",
+    "intent_category": "education_basic",
+    "keywords": ["bond", "fixed income", "debt", "yield"],
+    "content": "A bond is a loan made by an investor to a borrower (typically a corporation or government). The borrower pays periodic interest (the coupon) and returns the principal at maturity. Bonds are generally considered lower risk than stocks but offer lower potential returns."
+  },
+  {
+    "id": "edu_004",
+    "title": "What is diversification?",
+    "doc_type": "education",
+    "intent_category": "education_basic",
+    "keywords": ["diversification", "diversify", "risk", "portfolio spread"],
+    "content": "Diversification is the practice of spreading investments across different asset classes, sectors, or geographies to reduce risk. The idea is that losses in one area may be offset by gains in another. A diversified portfolio typically includes a mix of stocks, bonds, and other assets."
+  },
+  {
+    "id": "edu_005",
+    "title": "What is dollar-cost averaging?",
+    "doc_type": "education",
+    "intent_category": "education_basic",
+    "keywords": ["dollar cost averaging", "dca", "regular investing", "recurring investment"],
+    "content": "Dollar-cost averaging (DCA) is an investment strategy where you invest a fixed amount at regular intervals regardless of market conditions. This reduces the impact of volatility — you buy more shares when prices are low and fewer when prices are high, potentially lowering your average cost over time."
+  },
+  {
+    "id": "edu_006",
+    "title": "What is market capitalization?",
+    "doc_type": "education",
+    "intent_category": "education_basic",
+    "keywords": ["market cap", "market capitalization", "large cap", "small cap"],
+    "content": "Market capitalization (market cap) is the total market value of a company's outstanding shares. It is calculated as share price × total shares outstanding. Companies are often categorized as large-cap (>$10B), mid-cap ($2B–$10B), or small-cap (<$2B)."
+  },
+  {
+    "id": "edu_007",
+    "title": "What is a P/E ratio?",
+    "doc_type": "education",
+    "intent_category": "education_basic",
+    "keywords": ["pe ratio", "price to earnings", "valuation", "p/e"],
+    "content": "The price-to-earnings (P/E) ratio compares a company's stock price to its earnings per share. A high P/E may indicate investors expect strong future growth; a low P/E may suggest the stock is undervalued or the company faces challenges. It is one of the most widely used valuation metrics."
+  }
+]

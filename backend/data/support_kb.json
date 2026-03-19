@@ -1,0 +1,73 @@
+[
+  {
+    "id": "sup_001",
+    "title": "Bank account linking error",
+    "doc_type": "support",
+    "issue_type": "bank_link",
+    "keywords": ["bank", "link", "connect", "error", "plaid", "account"],
+    "playbook": {
+      "summary": "Bank linking issues are usually caused by incorrect credentials, unsupported institutions, or a temporary Plaid outage.",
+      "steps": [
+        "Confirm you are using your online banking username and password (not your app PIN).",
+        "Check that your bank is on our supported institutions list at nexafi.com/supported-banks.",
+        "Try unlinking and re-linking your account from Settings > Linked Accounts.",
+        "If the issue persists, check the NexaFi status page for any ongoing outages.",
+        "Contact support at support@nexafi.com with your account email and the error message you see."
+      ],
+      "follow_up_question": "Can you tell me which bank you are trying to connect and what error message you are seeing?"
+    }
+  },
+  {
+    "id": "sup_002",
+    "title": "Deposit not showing up",
+    "doc_type": "support",
+    "issue_type": "deposit",
+    "keywords": ["deposit", "transfer", "money", "funds", "missing", "not showing"],
+    "playbook": {
+      "summary": "ACH transfers typically take 1-3 business days. Instant deposits may be delayed by bank-side holds.",
+      "steps": [
+        "Check your transaction history under Portfolio > Activity.",
+        "ACH transfers take 1-3 business days to settle.",
+        "Instant deposit eligibility depends on your bank and account history.",
+        "If it has been more than 3 business days, contact support with your transfer confirmation number."
+      ],
+      "follow_up_question": "When did you initiate the deposit and which transfer method did you use (ACH or instant)?"
+    }
+  },
+  {
+    "id": "sup_003",
+    "title": "Cannot log in to account",
+    "doc_type": "support",
+    "issue_type": "login",
+    "keywords": ["login", "log in", "sign in", "password", "locked", "access"],
+    "playbook": {
+      "summary": "Login issues are usually resolved by resetting your password or clearing your browser cache.",
+      "steps": [
+        "Use 'Forgot Password' on the login screen to reset your credentials.",
+        "Clear your browser cache and cookies, then try again.",
+        "Ensure you are using the correct email address associated with your NexaFi account.",
+        "If your account is locked after multiple failed attempts, wait 30 minutes before retrying.",
+        "Contact support if you suspect unauthorized access."
+      ],
+      "follow_up_question": "Are you seeing a specific error message when you try to log in?"
+    }
+  },
+  {
+    "id": "sup_004",
+    "title": "Trade not executing",
+    "doc_type": "support",
+    "issue_type": "trade_execution",
+    "keywords": ["trade", "order", "buy", "sell", "not executing", "pending", "stuck"],
+    "playbook": {
+      "summary": "Pending orders may be waiting for market open, sufficient funds, or manual review.",
+      "steps": [
+        "Check that your order is not a limit order waiting for a specific price.",
+        "Confirm you have sufficient buying power in your account.",
+        "Market orders placed outside trading hours (9:30am–4pm ET) execute at next market open.",
+        "Review your order status under Portfolio > Orders.",
+        "If an order has been pending for more than one trading day, contact support."
+      ],
+      "follow_up_question": "What type of order did you place (market or limit) and when did you place it?"
+    }
+  }
+]

@@ -1,0 +1,51 @@
+[
+  {
+    "user_id": "demo_user_1",
+    "known": {
+      "name": "Alex",
+      "email": "[email protected]",
+      "account_type": "individual_brokerage",
+      "plan": "pro",
+      "joined_date": "2024-08-15",
+      "linked_bank": "Chase",
+      "portfolio_value_usd": 24500
+    },
+    "inferred": {
+      "risk_tolerance": "moderate",
+      "investing_style": "growth-oriented",
+      "primary_interest": "tech stocks and ETFs",
+      "session_frequency": "weekly",
+      "likely_goal": "long-term wealth building"
+    },
+    "missing": [
+      "investment_horizon",
+      "tax_bracket",
+      "retirement_account_status",
+      "income_range"
+    ]
+  },
+  {
+    "user_id": "demo_user_2",
+    "known": {
+      "name": "Jordan",
+      "email": "[email protected]",
+      "account_type": "roth_ira",
+      "plan": "free",
+      "joined_date": "2025-01-10",
+      "linked_bank": null,
+      "portfolio_value_usd": 5200
+    },
+    "inferred": {
+      "risk_tolerance": "conservative",
+      "investing_style": "passive index investing",
+      "primary_interest": "ETFs and bonds",
+      "session_frequency": "monthly",
+      "likely_goal": "retirement savings"
+    },
+    "missing": [
+      "tax_bracket",
+      "income_range",
+      "employer_match_status"
+    ]
+  }
+]

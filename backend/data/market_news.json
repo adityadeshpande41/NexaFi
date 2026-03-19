@@ -1,0 +1,68 @@
+[
+  {
+    "id": "news_001",
+    "symbol": "NVDA",
+    "title": "Semiconductor sector faces broad valuation reset",
+    "source": "Reuters",
+    "url": "https://reuters.com/mock/semiconductor-valuation",
+    "published_date": "2026-03-17",
+    "recency": "recent",
+    "doc_type": "market_news",
+    "summary": "Analysts across Wall Street are reassessing semiconductor valuations after a prolonged AI-driven rally. NVDA, AMD, and INTC all saw pressure as price-to-earnings multiples came under scrutiny."
+  },
+  {
+    "id": "news_002",
+    "symbol": "NVDA",
+    "title": "AI trade expectations moderate after Fed commentary",
+    "source": "Bloomberg",
+    "url": "https://bloomberg.com/mock/ai-trade-fed",
+    "published_date": "2026-03-16",
+    "recency": "recent",
+    "doc_type": "market_news",
+    "summary": "Federal Reserve officials signaled a cautious stance on rate cuts, dampening risk appetite. AI-linked equities including NVDA saw selling pressure as investors rotated to defensive positions."
+  },
+  {
+    "id": "news_003",
+    "symbol": "NVDA",
+    "title": "Analyst downgrades NVDA on near-term supply chain concerns",
+    "source": "Morgan Stanley Research",
+    "url": "https://morganstanley.com/mock/nvda-downgrade",
+    "published_date": "2026-03-15",
+    "recency": "recent",
+    "doc_type": "market_news",
+    "summary": "A Morgan Stanley analyst lowered their near-term price target for NVDA citing potential supply chain bottlenecks for next-gen GPU components, though the long-term thesis remains intact."
+  },
+  {
+    "id": "news_004",
+    "symbol": "AAPL",
+    "title": "Apple faces regulatory headwinds in EU",
+    "source": "Financial Times",
+    "url": "https://ft.com/mock/apple-eu-regulation",
+    "published_date": "2026-03-18",
+    "recency": "recent",
+    "doc_type": "market_news",
+    "summary": "The European Union opened a new antitrust investigation into Apple's App Store practices, adding regulatory uncertainty to the stock's near-term outlook."
+  },
+  {
+    "id": "news_005",
+    "symbol": "TSLA",
+    "title": "Tesla delivery numbers disappoint for Q1",
+    "source": "CNBC",
+    "url": "https://cnbc.com/mock/tesla-deliveries",
+    "published_date": "2026-03-14",
+    "recency": "recent",
+    "doc_type": "market_news",
+    "summary": "Tesla's preliminary Q1 delivery figures came in below analyst consensus, raising concerns about demand softness in key markets including China and Europe."
+  },
+  {
+    "id": "news_006",
+    "symbol": "SPY",
+    "title": "Broad market pullback on inflation data",
+    "source": "WSJ",
+    "url": "https://wsj.com/mock/market-pullback",
+    "published_date": "2026-03-19",
+    "recency": "today",
+    "doc_type": "market_news",
+    "summary": "The S&P 500 declined 1.2% after CPI data came in slightly above expectations, reigniting concerns about the Fed's rate path and compressing equity multiples across sectors."
+  }
+]

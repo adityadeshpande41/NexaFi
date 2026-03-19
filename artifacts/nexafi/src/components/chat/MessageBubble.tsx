@@ -2,10 +2,22 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import clsx from 'clsx';
 import { ChatMessage } from '../../services/apiTypes';
-import { Bot, User, CheckCircle2, AlertTriangle, Info } from 'lucide-react';
+import { CheckCircle2, AlertTriangle, Info, TrendingUp, Headphones, Heart, BarChart2 } from 'lucide-react';
 
 interface MessageBubbleProps {
   message: ChatMessage;
+}
+
+// Map backend card types to icons
+function CardIcon({ type }: { type: string }) {
+  switch (type) {
+    case 'market_summary': return <TrendingUp className="w-4 h-4 text-blue-400" />;
+    case 'support_steps':  return <Headphones className="w-4 h-4 text-emerald-400" />;
+    case 'retention_offer': return <Heart className="w-4 h-4 text-pink-400" />;
+    case 'action':         return <CheckCircle2 className="w-4 h-4 text-emerald-400" />;
+    case 'alert':          return <AlertTriangle className="w-4 h-4 text-amber-400" />;
+    default:               return <Info className="w-4 h-4 text-primary" />;
+  }
 }
 
 export function MessageBubble({ message }: MessageBubbleProps) {
@@ -21,11 +33,11 @@ export function MessageBubble({ message }: MessageBubbleProps) {
         isUser ? "justify-end" : "justify-start"
       )}
     >
+      {/* Nova avatar */}
       {!isUser && (
         <div className="flex-shrink-0 mt-1">
-          <div className="w-8 h-8 rounded-full bg-card border border-white/10 flex items-center justify-center shadow-lg relative overflow-hidden">
-             <img src={`${import.meta.env.BASE_URL}images/orb.png`} alt="Nova" className="w-full h-full object-cover animate-pulse-slow opacity-80" />
-             <div className="absolute inset-0 bg-primary/20 mix-blend-color"></div>
+          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg">
+            <BarChart2 className="w-4 h-4 text-white" />
           </div>
         </div>
       )}
@@ -36,31 +48,31 @@ export function MessageBubble({ message }: MessageBubbleProps) {
       )}>
         <div className={clsx(
           "px-5 py-3.5 text-sm md:text-base whitespace-pre-wrap leading-relaxed shadow-lg",
-          isUser 
+          isUser
             ? "bg-gradient-to-br from-primary to-blue-600 text-white rounded-2xl rounded-tr-sm"
             : "bg-card/80 backdrop-blur-md border border-white/10 text-foreground/90 rounded-2xl rounded-tl-sm"
         )}>
           {message.content}
         </div>
 
-        {/* Workflow Card (if attached to assistant message) */}
+        {/* Workflow Card */}
         {!isUser && message.workflowCard && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2 }}
-            className="mt-2 w-full glass-card p-4 rounded-xl border border-white/10 shadow-xl"
+            className="mt-1 w-full glass-card p-4 rounded-xl border border-white/10 shadow-xl"
           >
             <div className="flex items-center gap-2 mb-3">
-              {message.workflowCard.type === 'action' && <CheckCircle2 className="w-4 h-4 text-emerald-400" />}
-              {message.workflowCard.type === 'alert' && <AlertTriangle className="w-4 h-4 text-amber-400" />}
-              {message.workflowCard.type === 'info' && <Info className="w-4 h-4 text-primary" />}
-              <span className="font-semibold text-sm tracking-wide text-foreground">{message.workflowCard.title}</span>
+              <CardIcon type={message.workflowCard.type} />
+              <span className="font-semibold text-sm tracking-wide text-foreground">
+                {message.workflowCard.title}
+              </span>
             </div>
             <ul className="space-y-2">
               {message.workflowCard.items.map((item, idx) => (
                 <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-white/20 mt-1.5 flex-shrink-0" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary/50 mt-1.5 flex-shrink-0" />
                   <span>{item}</span>
                 </li>
               ))}

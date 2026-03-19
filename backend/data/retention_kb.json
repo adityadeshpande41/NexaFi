@@ -1,0 +1,67 @@
+[
+  {
+    "id": "ret_001",
+    "title": "User dislikes the app generally",
+    "doc_type": "retention",
+    "concern_type": "general_dissatisfaction",
+    "keywords": ["don't like", "hate", "bad app", "not useful", "disappointed", "cancel"],
+    "guidance": {
+      "empathy_line": "I'm sorry to hear that — your feedback genuinely helps us improve NexaFi.",
+      "proposed_fixes": [
+        "We recently launched a redesigned dashboard — try switching to it in Settings > Display.",
+        "Our AI insights feature can be personalized to your investing style in Profile > Preferences.",
+        "If there's a specific feature you feel is missing, our product team reviews all feedback submitted via Help > Suggest a Feature."
+      ],
+      "follow_up_question": "Could you share what specifically isn't working for you? That helps us point you to the right solution or pass your feedback to the team."
+    }
+  },
+  {
+    "id": "ret_002",
+    "title": "User finds the app too expensive",
+    "doc_type": "retention",
+    "concern_type": "pricing",
+    "keywords": ["expensive", "cost", "fee", "price", "subscription", "too much", "cheaper"],
+    "guidance": {
+      "empathy_line": "We hear you — cost is a real consideration and we want to make sure you're getting value.",
+      "proposed_fixes": [
+        "Our free tier includes portfolio tracking and basic AI insights with no subscription required.",
+        "The Pro plan at $9/month includes unlimited AI analysis, tax-loss harvesting alerts, and priority support.",
+        "Annual billing saves 20% compared to monthly — you can switch in Settings > Billing.",
+        "We offer a 30-day money-back guarantee if you feel the Pro plan isn't right for you."
+      ],
+      "follow_up_question": "Are you currently on the free or Pro plan? I can help you find the right fit."
+    }
+  },
+  {
+    "id": "ret_003",
+    "title": "User wants to cancel or delete account",
+    "doc_type": "retention",
+    "concern_type": "cancellation",
+    "keywords": ["cancel", "delete account", "close account", "leave", "quit", "unsubscribe"],
+    "guidance": {
+      "empathy_line": "I understand, and I want to make sure you have all the information before making that decision.",
+      "proposed_fixes": [
+        "You can downgrade to our free plan instead of canceling — you keep your portfolio history and data.",
+        "If there's a specific issue driving this, our support team can often resolve it quickly.",
+        "If you do decide to close your account, you can export all your data first from Settings > Data Export."
+      ],
+      "follow_up_question": "Is there a specific reason you're considering leaving? I'd love to help if there's something we can fix."
+    }
+  },
+  {
+    "id": "ret_004",
+    "title": "User frustrated with AI quality",
+    "doc_type": "retention",
+    "concern_type": "ai_quality",
+    "keywords": ["wrong", "bad advice", "inaccurate", "not helpful", "ai is bad", "useless"],
+    "guidance": {
+      "empathy_line": "That's fair feedback — AI tools should earn your trust, not just claim it.",
+      "proposed_fixes": [
+        "Nova's insights improve with more context about your goals — try updating your investor profile in Settings > Profile.",
+        "You can rate any response with a thumbs down to help us improve the model.",
+        "For complex questions, try being more specific — e.g. 'Why is NVDA down this week?' vs 'What's happening with stocks?'"
+      ],
+      "follow_up_question": "Can you share an example of a response that felt off? That helps us improve directly."
+    }
+  }
+]
