@@ -1,0 +1,18 @@
+packages:
+  "framer-motion": "For premium smooth animations, page transitions, and interactive chat bubble physics"
+  "lucide-react": "For beautiful, consistent iconography across the application"
+  "clsx": "For conditional class name merging"
+  "tailwind-merge": "For safely merging Tailwind utility classes without conflicts"
+  "date-fns": "For elegant timestamp formatting"
+
+images:
+  - path: "artifacts/nexafi/public/images/logo.png"
+    description: "A minimal, premium geometric diamond or hexagon logo mark in electric blue and violet on a completely transparent background"
+    aspect_ratio: "1:1"
+  - path: "artifacts/nexafi/public/images/orb.png"
+    description: "An abstract, glowing gradient orb or artificial intelligence core in deep space navy, electric blue, and vibrant violet. Highly detailed, glass-like texture, dark background."
+    aspect_ratio: "1:1"
+
+notes:
+  - This is a frontend-only prototype. All data is mocked in the services layer.
+  - Dark mode is the default and only theme for this premium fintech aesthetic.

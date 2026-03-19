@@ -1,0 +1,268 @@
+Build a frontend-only prototype for a modern AI finance chatbot web app.
+
+Project goal:
+Create a polished, interview-ready frontend for a finance chatbot product. This is only the frontend. Do not build a backend. Do not connect to any real APIs. Use mock data only. The backend will be connected separately on localhost later using a Python FastAPI backend with orchestrator.py, agents.py, classifier.py, and retriever.py, so structure the frontend cleanly for future integration.
+
+Product name:
+NexaFi
+
+Chatbot name:
+Nova
+
+Tagline:
+Your intelligent investing copilot
+
+Overall vibe:
+The UI should feel cool, sharp, tech-savvy, and finance-savvy. It should look like a premium fintech + AI product, suitable for a startup interview demo. Think modern wealth app meets AI copilot. The design should feel sleek, minimal, slightly futuristic, and highly credible. Avoid cartoonish styles. Make it look like a real funded startup product.
+
+Tech stack:
+Use React with TypeScript.
+Use Tailwind CSS.
+Componentize the app cleanly.
+Keep the code organized and easy to extend.
+No backend code.
+No authentication.
+No database.
+No real API calls.
+
+Core requirement:
+Frontend only with mock data.
+I will connect the backend locally later.
+Prepare the code so that swapping mock responses for localhost API calls will be easy.
+
+Important future backend assumption:
+The frontend should be designed to later call a Python backend like:
+POST http://localhost:8000/chat
+
+Expected request body:
+{
+  "user_id": "demo_user_1",
+  "session_id": "session_123",
+  "message": "Why is NVDA down this week?",
+  "history": [
+    {"role": "user", "content": "Hello"},
+    {"role": "assistant", "content": "Hi, how can I help?"}
+  ],
+  "system_view": true
+}
+
+Expected response shape:
+{
+  "response": "NVIDIA is down this week mainly due to sector-wide pullback and valuation concerns...",
+  "intent": "market_explanation",
+  "route": "market_context_path",
+  "agent_used": "market_agent",
+  "tools_used": ["market_snapshot", "news_fetch"],
+  "used_vector_search": true,
+  "confidence": 0.92,
+  "latency_ms": 840,
+  "citations": [
+    {"title": "Semiconductor sector weakness", "source": "Reuters"},
+    {"title": "Analyst valuation concerns", "source": "Bloomberg"}
+  ],
+  "state": {
+    "known": {"goal": "long-term growth"},
+    "inferred": {"risk_tolerance": "moderate"},
+    "missing": ["income stability"]
+  },
+  "workflow_card": {
+    "type": "market_summary",
+    "title": "What this means",
+    "items": [
+      "This may reflect short-term volatility rather than a thesis change.",
+      "Check whether the move is company-specific or sector-wide."
+    ]
+  }
+}
+
+Design requirements:
+- Dark mode by default
+- Premium fintech aesthetic
+- Deep navy / charcoal / black base
+- Subtle gradients
+- Glassmorphism or soft card surfaces where appropriate
+- Elegant typography
+- Clean spacing
+- Smooth hover transitions and micro-interactions
+- Minimal but high-quality icon usage
+- Professional, investor-grade look
+- Responsive layout for desktop first, but should also work on tablet/mobile
+
+App layout:
+Build a single-page app with the following sections:
+
+1. Top navbar
+- Brand name: NexaFi
+- Small logo/mark
+- Nav items: Chat, Insights, Workflows, Profile State
+- Right side button: “Live Demo”
+- Clean sticky header
+
+2. Left sidebar
+A modern sidebar with:
+- New Chat button
+- Recent conversations
+- Saved prompts
+- Workflow shortcuts
+- Small profile chip at bottom
+The sidebar should feel like an AI copilot workspace.
+
+3. Main chat area
+Include:
+- Chat header with chatbot avatar/name: Nova
+- Subtitle showing status like “Intent-aware investing copilot”
+- Message bubbles for user and assistant
+- Typing/loading state
+- Suggested prompt chips
+- Input box at bottom with send button
+- Smooth scrolling and spacing
+- Nice message animation
+
+4. Right insights panel
+Create a contextual side panel showing system intelligence for the current conversation.
+Include elegant cards for:
+- Intent detected
+- Route selected
+- Agent used
+- Tools used
+- Vector search used or not
+- Confidence
+- Latency estimate
+- Citations / evidence sources
+- User state (known / inferred / missing)
+This should look elegant and premium, not like a developer console.
+
+5. Bottom or floating metrics strip
+Show a small compact strip with:
+- LLM calls
+- Tool calls
+- Fast path / grounded path badge
+- Cost efficiency badge
+- Session memory status
+
+Mock behavior:
+The app should support mock flows for these user prompts:
+
+A. Education flow
+Prompt: “What is an ETF?”
+Mock response:
+- Intent: education_basic
+- Route: direct_answer_path
+- Agent used: education_agent
+- No tools used
+- Optional vector search from education KB
+- Short, clear answer
+
+B. Market explanation flow
+Prompt: “Why is NVDA down this week?”
+Mock response:
+- Intent: market_explanation
+- Route: market_context_path
+- Agent used: market_agent
+- Tools used: market_snapshot, news_fetch
+- Vector search used: yes
+- Response should mention 2 to 3 likely drivers with citations
+- Include a small “What this means” section
+
+C. Support flow
+Prompt: “I’m getting an error linking my bank”
+Mock response:
+- Intent: support_issue
+- Route: support_workflow_path
+- Agent used: support_agent
+- Ask one follow-up question first
+- Show structured issue resolution card in right panel
+
+D. Churn flow
+Prompt: “I don’t like this app”
+Mock response:
+- Intent: churn_risk
+- Route: retention_workflow_path
+- Agent used: retention_agent
+- Ask a clarifying question
+- Suggest 2 to 3 concrete improvements/features
+
+E. Profile transparency flow
+Prompt: “What assumptions are you making about me?”
+Mock response:
+- Intent: profile_transparency
+- Route: profile_state_path
+- Agent used: profile_agent
+- Show known vs inferred vs missing attributes
+- Make this visually elegant
+
+UI details to include:
+- Suggested starter prompts on load
+- Nice assistant avatar for Nova
+- Subtle animated gradient orb or fintech dashboard-style background accents
+- Cards with rounded corners and soft shadows
+- Beautiful badges/chips for route types like:
+  - Direct Answer
+  - Grounded Market Path
+  - Support Workflow
+  - Retention Workflow
+- Small evidence cards for news/citations
+- Fake portfolio/profile chip somewhere in UI:
+  - Goal: Long-term growth
+  - Risk: Moderate
+  - Horizon: 10+ years
+
+Information architecture:
+This UI should make it obvious that the chatbot is intelligent and efficient.
+The app should visually reflect:
+- intent routing
+- selective tool usage
+- vector search
+- grounded responses
+- workflow-specific handling
+But it should still feel like a clean product, not a technical dashboard.
+
+Mock data structure:
+Create a simple mock data layer in separate files.
+Include:
+- conversation history
+- detected intents
+- route metadata
+- agent metadata
+- evidence snippets
+- support playbooks
+- profile state
+Make it easy to replace later with backend responses from localhost.
+
+Important engineering requirement:
+Abstract the chat data flow behind a service layer.
+For example:
+- mockChatService.ts
+- apiTypes.ts
+- mockData.ts
+
+The service layer should expose something like:
+sendMessage(message: string, history: ChatMessage[], systemView: boolean): Promise<ChatResponse>
+
+So later I can replace mock service calls with actual fetch calls to a local FastAPI backend.
+
+Expected output:
+Generate a complete frontend app with:
+- clean file structure
+- reusable components
+- elegant UI
+- realistic mock data
+- easy future backend integration
+
+Also:
+- add a polished empty state
+- add a fake loading animation while responses appear
+- make the whole prototype feel interview-demo ready
+
+Stretch goal:
+Add a mode toggle in the right panel:
+- User View
+- System View
+
+In User View, keep it polished and product-facing.
+In System View, reveal the orchestration details for demo purposes.
+
+Do not build backend code.
+Do not use real APIs.
+Do not overcomplicate state management unless needed.
+Keep it visually strong, believable, and easy to demo.
