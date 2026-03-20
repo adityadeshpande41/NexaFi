@@ -14,3 +14,8 @@ chromadb==0.5.3
 asyncpg==0.29.0
 pgvector==0.2.5
 sqlalchemy[asyncio]==2.0.30
+
+# Multi-agent orchestration
+langgraph==1.1.0
+langchain-core==1.2.18
+langchain-openai==1.1.11

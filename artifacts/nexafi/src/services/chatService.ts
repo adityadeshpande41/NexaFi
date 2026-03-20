@@ -64,15 +64,30 @@ export const getSessionMetrics = (responses: ChatResponse[]): SessionMetrics => 
   }
 
   const toolCalls = responses.reduce((acc, r) => acc + (r.tools_used?.length || 0), 0);
-  const llmCalls = responses.length;
   const latest = responses[responses.length - 1];
+
+  // Derive actual LLM calls from route/agent metadata rather than response count
+  const llmCallsForLatest = (() => {
+    const route = latest.route ?? '';
+    const agent = latest.agent_used ?? '';
+    if (route === 'guardrail_path') return 0;           // blocked before any LLM
+    if (agent === 'fallback_agent') return 0;           // canned response, no LLM
+    if (route === 'graph_path') {
+      // graph: 1 parse + N agents + 1 synthesize + 1 judge (+ 1 regenerate if retry)
+      const agentCount = (agent.match(/,/g) || []).length + 1;
+      return 1 + agentCount + 1 + 1;
+    }
+    return 1; // single fast-path agent = 1 LLM call
+  })();
 
   let pathType: SessionMetrics['pathType'] = 'Fast Path';
   if (latest.tools_used.length > 0) pathType = 'Grounded Path';
-  if (latest.route.includes('workflow')) pathType = 'Workflow Path';
+  if (latest.route?.includes('workflow')) pathType = 'Workflow Path';
+  if (latest.route === 'graph_path') pathType = 'Graph Path';
+  if (latest.route === 'guardrail_path') pathType = 'Blocked';
 
   return {
-    llmCalls,
+    llmCalls: llmCallsForLatest,
     toolCalls,
     costEfficiency: toolCalls > 2 ? 'Medium' : 'High',
     pathType,

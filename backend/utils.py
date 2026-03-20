@@ -15,6 +15,38 @@ _TICKER_PATTERN = re.compile(r"\b([A-Z]{1,5})\b")
 _KNOWN_TICKERS = {
     "NVDA", "AAPL", "MSFT", "GOOGL", "AMZN", "TSLA", "META",
     "AMD", "INTC", "NFLX", "SPY", "QQQ", "BTC", "ETH",
+    "JPM", "BAC", "GS", "MS", "V", "MA", "PYPL",
+    "DIS", "NFLX", "UBER", "LYFT", "SNAP", "TWTR", "COIN",
+}
+
+# Company name → ticker mapping (case-insensitive)
+_NAME_TO_TICKER: dict[str, str] = {
+    "apple": "AAPL",
+    "microsoft": "MSFT",
+    "google": "GOOGL",
+    "alphabet": "GOOGL",
+    "amazon": "AMZN",
+    "tesla": "TSLA",
+    "nvidia": "NVDA",
+    "meta": "META",
+    "facebook": "META",
+    "netflix": "NFLX",
+    "amd": "AMD",
+    "intel": "INTC",
+    "disney": "DIS",
+    "uber": "UBER",
+    "paypal": "PYPL",
+    "jpmorgan": "JPM",
+    "jp morgan": "JPM",
+    "goldman": "GS",
+    "goldman sachs": "GS",
+    "bank of america": "BAC",
+    "coinbase": "COIN",
+    "snapchat": "SNAP",
+    "snap": "SNAP",
+    "s&p": "SPY",
+    "s&p 500": "SPY",
+    "nasdaq": "QQQ",
 }
 
 # Time-range keywords
@@ -34,12 +66,22 @@ _TIME_RANGE_MAP = {
 def extract_ticker(text: str) -> str | None:
     """
     Extract the first recognizable stock ticker from a message.
-    Returns None if no known ticker is found.
+    Checks company name mapping first (case-insensitive), then
+    looks for uppercase ticker symbols. Returns None if nothing found.
     """
+    lower = text.lower()
+
+    # 1. Check multi-word company names first (longest match wins)
+    for name in sorted(_NAME_TO_TICKER, key=len, reverse=True):
+        if name in lower:
+            return _NAME_TO_TICKER[name]
+
+    # 2. Look for uppercase ticker symbols in the original text
     candidates = _TICKER_PATTERN.findall(text.upper())
     for c in candidates:
         if c in _KNOWN_TICKERS:
             return c
+
     return None
 
 
@@ -129,3 +171,56 @@ def ttl_cache(ttl_seconds: int = 60):
             return result
         return wrapper
     return decorator
+
+# ---------------------------------------------------------------------------
+# Response cache — file-backed so it survives uvicorn --reload restarts
+# ---------------------------------------------------------------------------
+
+import hashlib
+import pickle
+
+_RESPONSE_CACHE_TTL = 300  # 5 minutes
+_CACHE_DIR = os.path.join(os.path.dirname(__file__), ".response_cache")
+
+
+def _normalize_message(message: str) -> str:
+    """Lowercase, strip punctuation, collapse whitespace for cache key."""
+    msg = message.lower().strip()
+    msg = re.sub(r"[^\w\s]", "", msg)
+    msg = re.sub(r"\s+", " ", msg)
+    return msg
+
+
+def _cache_path(key: str) -> str:
+    os.makedirs(_CACHE_DIR, exist_ok=True)
+    return os.path.join(_CACHE_DIR, key + ".pkl")
+
+
+def get_cached_response(message: str) -> dict | None:
+    """Return cached agent result for this message, or None if not cached/expired."""
+    key = hashlib.md5(_normalize_message(message).encode()).hexdigest()
+    path = _cache_path(key)
+    try:
+        if not os.path.exists(path):
+            return None
+        with open(path, "rb") as f:
+            entry = pickle.load(f)
+        if time.time() > entry["expires_at"]:
+            os.remove(path)
+            return None
+        return entry["value"]
+    except Exception:
+        return None
+
+
+def set_cached_response(message: str, result: dict) -> None:
+    """Persist an agent result to disk cache."""
+    key = hashlib.md5(_normalize_message(message).encode()).hexdigest()
+    path = _cache_path(key)
+    try:
+        # Strip non-serializable objects before pickling
+        safe = {k: v for k, v in result.items() if isinstance(v, (str, int, float, bool, list, dict, type(None)))}
+        with open(path, "wb") as f:
+            pickle.dump({"value": safe, "expires_at": time.time() + _RESPONSE_CACHE_TTL}, f)
+    except Exception:
+        pass  # cache write failure is non-fatal

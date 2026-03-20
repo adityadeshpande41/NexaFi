@@ -1,0 +1,86 @@
+[
+  {
+    "id": "judge_etf_001",
+    "title": "What an ETF Is and How It Works",
+    "category": "finance_fundamentals",
+    "content": "An ETF (Exchange-Traded Fund) is a basket of securities that trades on a stock exchange like a single stock. ETFs track an index, sector, commodity, or other asset. SPY tracks the S&P 500 index. QQQ tracks the Nasdaq-100. ETFs have expense ratios (annual fees) typically between 0.03% and 1%. They offer diversification because one share represents many underlying holdings. ETFs are NOT the same as mutual funds — they trade intraday at market prices, while mutual funds price once daily at NAV.",
+    "keywords": ["etf", "exchange traded fund", "spy", "qqq", "index fund", "basket", "expense ratio"]
+  },
+  {
+    "id": "judge_market_mechanics_001",
+    "title": "Why Stock Prices Move — Core Mechanics",
+    "category": "market_mechanics",
+    "content": "Stock prices move due to supply and demand. Key drivers: earnings reports (beat/miss vs analyst estimates), macroeconomic data (CPI, jobs report, Fed rate decisions), sector rotation (money moving between sectors), news events (product launches, lawsuits, executive changes), and broader market sentiment (risk-on vs risk-off). A stock can fall even on good earnings if the results missed elevated expectations — this is called 'sell the news'. Price movement should always be explained with reference to specific catalysts, not vague statements.",
+    "keywords": ["stock price", "why stock moves", "earnings", "catalyst", "supply demand", "sell the news", "market sentiment"]
+  },
+  {
+    "id": "judge_market_mechanics_002",
+    "title": "Understanding Market Indices — SPY, QQQ, Dow, Russell",
+    "category": "market_mechanics",
+    "content": "SPY (S&P 500 ETF) represents the 500 largest US companies by market cap. It is the most widely used benchmark for US equities. QQQ (Nasdaq-100 ETF) is heavily weighted toward technology stocks — Apple, Microsoft, Nvidia, Amazon, Meta make up a large portion. The Dow Jones Industrial Average tracks 30 large-cap US companies and is price-weighted (not market-cap weighted). The Russell 2000 tracks 2000 small-cap US companies and is a gauge of domestic economic health. When SPY falls but QQQ falls more, it typically signals tech-specific selling.",
+    "keywords": ["spy", "qqq", "dow jones", "russell 2000", "s&p 500", "nasdaq", "index", "benchmark"]
+  },
+  {
+    "id": "judge_risk_001",
+    "title": "Portfolio Risk — Concentration, Beta, Diversification",
+    "category": "risk_management",
+    "content": "Portfolio concentration risk occurs when too much capital is in one sector, stock, or asset class. A portfolio with >40% in a single sector is considered concentrated. Beta measures a stock's volatility relative to the market — beta >1 means more volatile than the market, beta <1 means less volatile. Diversification reduces unsystematic (company-specific) risk but cannot eliminate systematic (market-wide) risk. Rebalancing means selling overweight positions and buying underweight ones to return to target allocation. A risk audit should identify: largest single positions, sector weights, geographic exposure, and correlation between holdings.",
+    "keywords": ["concentration risk", "beta", "diversification", "rebalancing", "portfolio risk", "sector weight", "correlation"]
+  },
+  {
+    "id": "judge_earnings_001",
+    "title": "Earnings Reports — What They Mean and How to Read Them",
+    "category": "market_mechanics",
+    "content": "Earnings reports are quarterly financial results published by public companies. Key metrics: EPS (earnings per share) — actual vs analyst consensus estimate, Revenue — actual vs estimate, Guidance — management's forward outlook. A company beats earnings when actual EPS > consensus estimate. A miss is when actual EPS < estimate. Guidance matters more than the current quarter — a beat with weak guidance often causes a stock to fall. Earnings season runs roughly 2-3 weeks after each quarter ends (January, April, July, October). Pre-earnings, implied volatility rises; post-earnings it typically collapses (IV crush).",
+    "keywords": ["earnings", "eps", "revenue", "guidance", "beat", "miss", "analyst estimate", "iv crush", "earnings season"]
+  },
+  {
+    "id": "judge_dca_001",
+    "title": "Dollar-Cost Averaging (DCA) — Definition and Mechanics",
+    "category": "finance_fundamentals",
+    "content": "Dollar-cost averaging (DCA) is an investment strategy where a fixed dollar amount is invested at regular intervals regardless of price. Example: investing $500 every month into SPY. When prices are low, you buy more shares; when prices are high, you buy fewer. Over time this averages out the cost basis. DCA reduces the risk of investing a lump sum at a market peak. It does NOT guarantee profit or protect against loss in a declining market. DCA is most effective for long-term investors who cannot time the market.",
+    "keywords": ["dollar cost averaging", "dca", "regular investment", "cost basis", "lump sum", "market timing"]
+  },
+  {
+    "id": "judge_bond_001",
+    "title": "Bonds — How They Work and Their Relationship with Interest Rates",
+    "category": "finance_fundamentals",
+    "content": "A bond is a debt instrument where the issuer borrows money from the investor and pays periodic interest (coupon) plus principal at maturity. Bond prices and interest rates move inversely — when rates rise, existing bond prices fall; when rates fall, bond prices rise. Duration measures a bond's sensitivity to interest rate changes. The yield is the effective return if held to maturity. US Treasury bonds are considered risk-free (backed by the US government). Corporate bonds carry credit risk — higher yield = higher risk. The yield curve plots yields across maturities; an inverted yield curve (short rates > long rates) has historically preceded recessions.",
+    "keywords": ["bond", "coupon", "yield", "interest rate", "duration", "treasury", "yield curve", "inverted yield curve", "credit risk"]
+  },
+  {
+    "id": "judge_pe_ratio_001",
+    "title": "P/E Ratio — What It Means and Its Limitations",
+    "category": "finance_fundamentals",
+    "content": "The Price-to-Earnings (P/E) ratio is the stock price divided by earnings per share. A P/E of 20 means investors pay $20 for every $1 of earnings. High P/E can mean the market expects strong future growth (growth stocks) or that the stock is overvalued. Low P/E can mean undervaluation or weak growth prospects. The S&P 500 historical average P/E is around 15-17. Tech stocks typically trade at higher P/E ratios than utilities or financials. P/E is meaningless for companies with negative earnings. Forward P/E uses estimated future earnings; trailing P/E uses past 12 months.",
+    "keywords": ["pe ratio", "price to earnings", "valuation", "forward pe", "trailing pe", "overvalued", "undervalued"]
+  },
+  {
+    "id": "judge_nova_rules_001",
+    "title": "NexaFi Nova — What Nova Should and Should Not Say",
+    "category": "product_rules",
+    "content": "Nova is NexaFi's AI investing copilot. Nova MUST NOT: predict specific future prices, give personalised buy/sell recommendations for specific securities, claim a stock will go up or down, provide tax advice, provide legal advice. Nova MUST: ground all market claims in provided data, cite news sources when referencing market events, acknowledge uncertainty in market explanations, redirect off-topic questions politely, explain concepts clearly without jargon. Nova should distinguish between explaining what happened (factual, allowed) and predicting what will happen (not allowed).",
+    "keywords": ["nova rules", "investment advice", "price prediction", "buy sell recommendation", "grounded", "citation", "uncertainty"]
+  },
+  {
+    "id": "judge_market_prep_001",
+    "title": "What a Good Weekly Market Prep Should Cover",
+    "category": "product_rules",
+    "content": "A weekly market prep response should include: (1) last week's key index performance (SPY, QQQ, major movers), (2) macro events this week (Fed meetings, CPI releases, jobs data), (3) earnings calendar highlights for the week, (4) sector rotation signals if any, (5) watchlist suggestions based on momentum or upcoming catalysts. A market prep should NOT be a generic summary — it should be specific to the current week's data. It should reference actual price levels and percentage changes from the live data provided.",
+    "keywords": ["market prep", "weekly brief", "earnings calendar", "macro events", "sector rotation", "watchlist", "fed meeting", "cpi"]
+  },
+  {
+    "id": "judge_hallucination_001",
+    "title": "Common Hallucination Patterns to Flag in Finance AI",
+    "category": "quality_rules",
+    "content": "Finance AI responses should be flagged for hallucination when they: (1) cite specific price levels not present in the provided data, (2) reference news events not in the provided news context, (3) state analyst consensus estimates without a source, (4) claim a company reported specific earnings figures without data, (5) attribute price movements to causes not supported by the news provided, (6) use phrases like 'historically' or 'typically' without grounding. A grounded response only makes claims that can be traced back to the market snapshot, news articles, or knowledge base context provided in the prompt.",
+    "keywords": ["hallucination", "grounded", "citation", "fabricated data", "unsupported claim", "price level", "analyst estimate"]
+  },
+  {
+    "id": "judge_support_rules_001",
+    "title": "What a Good Support Response Looks Like",
+    "category": "product_rules",
+    "content": "A good support response for NexaFi should: (1) acknowledge the user's issue empathetically in one sentence, (2) provide clear numbered troubleshooting steps from the playbook, (3) ask at most ONE clarifying question if key information is missing, (4) not ask multiple questions at once, (5) not give generic advice like 'contact support' without first attempting to resolve the issue, (6) escalate to human support only after the playbook steps are exhausted. Common issues: bank linking failures (check Plaid status, try different browser), login issues (clear cache, reset password), deposit delays (check bank processing times, verify account).",
+    "keywords": ["support", "troubleshooting", "bank linking", "login issue", "deposit", "plaid", "escalation", "clarifying question"]
+  }
+]

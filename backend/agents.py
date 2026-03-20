@@ -65,7 +65,7 @@ def _chat(system: str, user: str, temperature: float = 0.4) -> str:
             {"role": "user", "content": user},
         ],
         temperature=temperature,
-        max_tokens=600,
+        max_tokens=400,
     )
     return resp.choices[0].message.content.strip()
 

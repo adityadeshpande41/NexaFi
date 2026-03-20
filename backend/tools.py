@@ -37,9 +37,42 @@ def _date_range(time_range: str) -> tuple[str, str]:
     return from_dt.strftime("%Y-%m-%d"), to_dt.strftime("%Y-%m-%d")
 
 
-# ---------------------------------------------------------------------------
-# Market tools
-# ---------------------------------------------------------------------------
+# Company name aliases for relevance filtering
+_TICKER_ALIASES: dict[str, list[str]] = {
+    "AAPL": ["apple", "aapl", "iphone", "ipad", "mac", "tim cook"],
+    "MSFT": ["microsoft", "msft", "azure", "windows", "copilot", "satya nadella"],
+    "NVDA": ["nvidia", "nvda", "gpu", "jensen huang", "cuda", "blackwell"],
+    "TSLA": ["tesla", "tsla", "elon musk", "electric vehicle", "ev"],
+    "GOOGL": ["google", "googl", "alphabet", "youtube", "gemini", "sundar"],
+    "AMZN": ["amazon", "amzn", "aws", "prime", "andy jassy"],
+    "META": ["meta", "facebook", "instagram", "whatsapp", "zuckerberg"],
+    "AMD": ["amd", "advanced micro", "lisa su", "radeon", "ryzen"],
+    "INTC": ["intel", "intc", "pat gelsinger"],
+    "NFLX": ["netflix", "nflx", "streaming"],
+    "SPY": ["s&p", "spy", "s&p 500", "spdr", "index"],
+    "QQQ": ["nasdaq", "qqq", "nasdaq-100"],
+    "JPM": ["jpmorgan", "jp morgan", "jamie dimon"],
+    "GS": ["goldman sachs", "goldman"],
+    "BAC": ["bank of america", "bofa"],
+    "COIN": ["coinbase", "coin"],
+}
+
+
+def _is_relevant(article: dict, symbol: str) -> bool:
+    """
+    Check if a news article is actually relevant to the given ticker.
+    Looks for ticker symbol or company name aliases in title + summary.
+    """
+    sym = symbol.upper()
+    aliases = _TICKER_ALIASES.get(sym, [sym.lower()])
+    # Always include the raw ticker symbol as an alias
+    aliases = [sym.lower()] + [a.lower() for a in aliases]
+
+    title = (article.get("title") or article.get("headline") or "").lower()
+    summary = (article.get("summary") or "").lower()
+    text = f"{title} {summary}"
+
+    return any(alias in text for alias in aliases)
 
 @ttl_cache(ttl_seconds=60)
 def get_market_snapshot(symbol: str, time_range: str = "1w") -> dict[str, Any]:
@@ -71,31 +104,52 @@ def get_market_snapshot(symbol: str, time_range: str = "1w") -> dict[str, Any]:
 @ttl_cache(ttl_seconds=300)
 def get_recent_news(symbol: str, time_range: str = "1w", limit: int = 5) -> list[dict]:
     """
-    Fetch real company news from Finnhub.
-    Endpoint: GET /company-news
+    Fetch company news from Finnhub, filtered to only articles
+    actually relevant to the requested ticker/company.
+    Fetches 3x the limit from Finnhub to have enough to filter from.
     """
     if not FINNHUB_API_KEY:
         return _mock_news(symbol, limit)
 
     from_date, to_date = _date_range(time_range)
     try:
+        # Fetch more than needed so filtering doesn't leave us empty
         articles = _finnhub_get("/company-news", {
             "symbol": symbol.upper(),
             "from": from_date,
             "to": to_date,
         })
+
         results = []
-        for a in articles[:limit]:
-            results.append({
+        irrelevant = []
+
+        for a in articles:
+            item = {
                 "id": str(a.get("id", "")),
                 "symbol": symbol.upper(),
                 "title": a.get("headline", ""),
                 "source": a.get("source", ""),
                 "url": a.get("url", ""),
-                "published_date": datetime.utcfromtimestamp(a.get("datetime", 0)).strftime("%Y-%m-%d"),
+                "published_date": datetime.utcfromtimestamp(
+                    a.get("datetime", 0)
+                ).strftime("%Y-%m-%d"),
                 "summary": a.get("summary", ""),
-            })
-        return results
+            }
+            if _is_relevant(item, symbol):
+                results.append(item)
+            else:
+                irrelevant.append(item)
+
+            if len(results) >= limit:
+                break
+
+        # If not enough relevant articles found, pad with best available
+        if len(results) < limit:
+            needed = limit - len(results)
+            results.extend(irrelevant[:needed])
+
+        return results[:limit]
+
     except Exception as e:
         return [{"error": str(e), "source": "finnhub_error"}]
 

@@ -13,14 +13,18 @@ from prompts import GUARDRAIL_UNSAFE_RESPONSE, OFF_TOPIC_RESPONSE
 # ---------------------------------------------------------------------------
 
 _UNSAFE_PATTERNS: list[str] = [
-    r"\bhack\b",
-    r"\bexploit\b",
+    r"\bhack(ing|er|ers|ed|s)?\b",       # hack, hacking, hacker, hacked
+    r"\bexploit(ing|ed|s|ation)?\b",     # exploit, exploiting, exploitation
     r"\billegal\b",
-    r"\blaunder\b",
-    r"\bfraud\b",
-    r"\bscam\b",
-    r"\binsider trading\b",
+    r"\blaunder(ing|ed|s)?\b",           # launder, laundering
+    r"\bfraud(ulent|ster|s)?\b",         # fraud, fraudulent
+    r"\bscam(ming|med|s|mer)?\b",        # scam, scamming, scammer
+    r"\binsider.{0,10}trad(ing|e)\b",    # insider trading / insider trade
     r"\bmanipulate.{0,20}market\b",
+    r"\bpump.{0,10}dump\b",              # pump and dump schemes
+    r"\bwash.{0,10}trad(ing|e)\b",       # wash trading
+    r"\bfront.{0,10}run(ning|s)?\b",     # front running
+    r"\bmarket.{0,10}manipulat\b",       # market manipulation
 ]
 
 # Topics clearly outside finance / product scope

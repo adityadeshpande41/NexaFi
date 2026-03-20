@@ -22,7 +22,7 @@ async def chat(request: ChatRequest) -> ChatResponse:
     a structured ChatResponse.
     """
     try:
-        return orchestrator.handle(request)
+        return await orchestrator.handle(request)
     except Exception as e:
         # Surface unexpected errors as 500 with a safe message
         raise HTTPException(status_code=500, detail=f"Internal error: {str(e)}")
