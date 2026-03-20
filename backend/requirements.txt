@@ -7,7 +7,10 @@ python-dotenv==1.0.1
 openai==1.30.0
 httpx==0.27.0
 
-# pgvector / Postgres (needed when DATABASE_URL is set)
+# Vector DB — ChromaDB (local persistent) + pgvector fallback
+chromadb==0.5.3
+
+# pgvector / Postgres (optional, used when DATABASE_URL is set)
 asyncpg==0.29.0
 pgvector==0.2.5
 sqlalchemy[asyncio]==2.0.30

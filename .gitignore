@@ -55,3 +55,4 @@ __pycache__/
 .env
 .env.local
 backend/.env
+chroma_db/
