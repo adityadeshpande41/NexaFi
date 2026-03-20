@@ -69,5 +69,77 @@
       ],
       "follow_up_question": "What type of order did you place (market or limit) and when did you place it?"
     }
+  },
+  {
+    "id": "sup_005",
+    "title": "Withdrawal not received",
+    "doc_type": "support",
+    "issue_type": "withdrawal",
+    "keywords": ["withdrawal", "withdraw", "cash out", "money not received", "bank transfer out"],
+    "playbook": {
+      "summary": "Withdrawals to bank accounts typically take 1-3 business days via ACH. Delays can occur due to bank processing times or account verification holds.",
+      "steps": [
+        "Check your withdrawal status under Portfolio > Activity > Withdrawals.",
+        "Standard ACH withdrawals take 1-3 business days after initiation.",
+        "Ensure your linked bank account is fully verified — unverified accounts may have withdrawal holds.",
+        "Large withdrawals (over $50,000) may require additional identity verification.",
+        "If it has been more than 5 business days, contact support with your withdrawal reference number."
+      ],
+      "follow_up_question": "When did you initiate the withdrawal and what amount was it for?"
+    }
+  },
+  {
+    "id": "sup_006",
+    "title": "Two-factor authentication issues",
+    "doc_type": "support",
+    "issue_type": "2fa",
+    "keywords": ["2fa", "two factor", "authentication", "sms code", "authenticator app", "otp", "verification code"],
+    "playbook": {
+      "summary": "2FA issues are usually caused by expired codes, time sync problems with authenticator apps, or a lost phone.",
+      "steps": [
+        "SMS codes expire after 10 minutes — request a new one if yours has expired.",
+        "If using an authenticator app, ensure your phone's time is set to automatic/network time.",
+        "If you've lost access to your 2FA device, use your backup recovery codes saved during setup.",
+        "If you don't have backup codes, contact support with a government-issued ID for identity verification.",
+        "We can temporarily disable 2FA on your account after identity verification."
+      ],
+      "follow_up_question": "Are you using SMS-based 2FA or an authenticator app like Google Authenticator?"
+    }
+  },
+  {
+    "id": "sup_007",
+    "title": "Portfolio data not updating",
+    "doc_type": "support",
+    "issue_type": "data_sync",
+    "keywords": ["portfolio", "not updating", "stale data", "wrong price", "sync", "refresh"],
+    "playbook": {
+      "summary": "Portfolio data refreshes every 15 minutes during market hours. Stale data is usually resolved by a manual refresh or re-linking accounts.",
+      "steps": [
+        "Pull down to refresh on mobile, or press Ctrl+R on desktop to force a data reload.",
+        "Portfolio prices update every 15 minutes during market hours (9:30am–4pm ET).",
+        "After-hours prices reflect the last traded price and update less frequently.",
+        "If linked brokerage data is stale, try unlinking and re-linking under Settings > Linked Accounts.",
+        "If the issue persists after 30 minutes, contact support with a screenshot of the incorrect data."
+      ],
+      "follow_up_question": "Is the issue with live prices, your linked brokerage balance, or both?"
+    }
+  },
+  {
+    "id": "sup_008",
+    "title": "Incorrect tax document or 1099",
+    "doc_type": "support",
+    "issue_type": "tax_document",
+    "keywords": ["1099", "tax document", "tax form", "incorrect", "missing tax", "cost basis"],
+    "playbook": {
+      "summary": "Tax documents are issued by February 15 each year. Corrections may be issued if brokerage data is amended.",
+      "steps": [
+        "Tax documents (1099-B, 1099-DIV) are available under Settings > Tax Documents by February 15.",
+        "If you received a corrected 1099 from your brokerage, NexaFi will issue an amended document within 10 business days.",
+        "Cost basis discrepancies often occur when securities were transferred in from another broker — contact support to update transfer-in cost basis.",
+        "For urgent tax filing needs, contact support and we can provide a manual summary of your transactions.",
+        "NexaFi does not provide tax advice — consult a CPA for complex tax situations."
+      ],
+      "follow_up_question": "Is the issue with a missing document, an incorrect amount, or a cost basis discrepancy?"
+    }
   }
 ]

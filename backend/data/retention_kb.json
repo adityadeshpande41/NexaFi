@@ -63,5 +63,56 @@
       ],
       "follow_up_question": "Can you share an example of a response that felt off? That helps us improve directly."
     }
+  },
+  {
+    "id": "ret_005",
+    "title": "User switching to a competitor",
+    "doc_type": "retention",
+    "concern_type": "competitor_switch",
+    "keywords": ["switching", "competitor", "robinhood", "wealthfront", "betterment", "fidelity", "other app", "better app"],
+    "guidance": {
+      "empathy_line": "I appreciate you being upfront — let me make sure you have the full picture before you decide.",
+      "proposed_fixes": [
+        "NexaFi's AI copilot goes beyond basic robo-advising — it explains the 'why' behind every recommendation in plain language.",
+        "We offer free account transfers (ACATS) from most brokerages — no fees to move your portfolio to NexaFi.",
+        "If a competitor offers a specific feature you need, tell us — our product team actively builds based on user requests.",
+        "We can match or beat most competitor pricing for annual Pro subscribers — contact support to discuss."
+      ],
+      "follow_up_question": "Which platform are you considering and what's drawing you to it? I may be able to show you how NexaFi compares."
+    }
+  },
+  {
+    "id": "ret_006",
+    "title": "User lost money and blames the app",
+    "doc_type": "retention",
+    "concern_type": "investment_loss",
+    "keywords": ["lost money", "lost my investment", "bad recommendation", "portfolio down", "lost savings", "your fault"],
+    "guidance": {
+      "empathy_line": "I'm truly sorry about your losses — that's genuinely stressful and I want to address this carefully.",
+      "proposed_fixes": [
+        "NexaFi provides educational insights and analysis, not personalized financial advice — all investment decisions are yours to make.",
+        "We can review your portfolio together to understand what happened and identify any adjustments going forward.",
+        "If you believe a specific feature or data error contributed to a loss, please document it and contact our support team — we take these reports seriously.",
+        "Consider speaking with a licensed financial advisor for personalized guidance on recovering from losses."
+      ],
+      "follow_up_question": "Can you walk me through what happened? I want to understand the situation fully before responding."
+    }
+  },
+  {
+    "id": "ret_007",
+    "title": "User wants a feature that doesn't exist",
+    "doc_type": "retention",
+    "concern_type": "missing_feature",
+    "keywords": ["feature request", "missing feature", "wish you had", "why don't you have", "add this", "need this feature"],
+    "guidance": {
+      "empathy_line": "That's great feedback — the best features we've built came directly from users like you.",
+      "proposed_fixes": [
+        "Submit your feature request via Help > Suggest a Feature — our product team reviews every submission.",
+        "Check our public roadmap at nexafi.com/roadmap to see if your request is already planned.",
+        "Many power features are available in the Pro plan — it's possible what you're looking for already exists.",
+        "Join our beta program at nexafi.com/beta to get early access to features in development."
+      ],
+      "follow_up_question": "What feature are you looking for? I can check if it's on our roadmap or already available in a different part of the app."
+    }
   }
 ]

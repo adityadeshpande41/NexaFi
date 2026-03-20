@@ -54,5 +54,109 @@
     "intent_category": "education_basic",
     "keywords": ["pe ratio", "price to earnings", "valuation", "p/e"],
     "content": "The price-to-earnings (P/E) ratio compares a company's stock price to its earnings per share. A high P/E may indicate investors expect strong future growth; a low P/E may suggest the stock is undervalued or the company faces challenges. It is one of the most widely used valuation metrics."
+  },
+  {
+    "id": "edu_008",
+    "title": "What is a mutual fund?",
+    "doc_type": "education",
+    "intent_category": "education_basic",
+    "keywords": ["mutual fund", "actively managed", "fund manager", "pooled investment"],
+    "content": "A mutual fund pools money from many investors to buy a diversified portfolio of stocks, bonds, or other securities. Unlike ETFs, mutual funds are priced once per day after market close and are often actively managed by a professional fund manager. They typically carry higher fees than passive ETFs but may outperform in certain market conditions."
+  },
+  {
+    "id": "edu_009",
+    "title": "What is compound interest?",
+    "doc_type": "education",
+    "intent_category": "education_basic",
+    "keywords": ["compound interest", "compounding", "interest on interest", "growth"],
+    "content": "Compound interest is interest calculated on both the initial principal and the accumulated interest from previous periods. Often called 'interest on interest', it causes wealth to grow exponentially over time. For example, $10,000 at 8% annual return compounded over 30 years grows to approximately $100,627 — without adding a single dollar more."
+  },
+  {
+    "id": "edu_010",
+    "title": "What is inflation and how does it affect investments?",
+    "doc_type": "education",
+    "intent_category": "education_basic",
+    "keywords": ["inflation", "cpi", "purchasing power", "real return", "interest rates"],
+    "content": "Inflation is the rate at which the general price level of goods and services rises, eroding purchasing power. For investors, inflation matters because it reduces the real return on investments. A 7% nominal return with 3% inflation yields only a 4% real return. Equities and real assets like real estate historically outpace inflation over the long run, while cash and fixed-rate bonds lose real value."
+  },
+  {
+    "id": "edu_011",
+    "title": "What is a dividend?",
+    "doc_type": "education",
+    "intent_category": "education_basic",
+    "keywords": ["dividend", "dividend yield", "income investing", "payout"],
+    "content": "A dividend is a portion of a company's earnings distributed to shareholders, usually quarterly. Dividend yield is the annual dividend per share divided by the stock price. Income-focused investors often seek high-dividend stocks or dividend ETFs. Reinvesting dividends (DRIP) can significantly accelerate long-term portfolio growth through compounding."
+  },
+  {
+    "id": "edu_012",
+    "title": "What is a Roth IRA?",
+    "doc_type": "education",
+    "intent_category": "education_basic",
+    "keywords": ["roth ira", "retirement account", "tax-free", "ira", "retirement savings"],
+    "content": "A Roth IRA is a tax-advantaged individual retirement account where contributions are made with after-tax dollars. Qualified withdrawals in retirement are completely tax-free, including all investment gains. In 2025, the contribution limit is $7,000 per year ($8,000 if age 50+). Roth IRAs are especially powerful for younger investors who expect to be in a higher tax bracket in retirement."
+  },
+  {
+    "id": "edu_013",
+    "title": "What is a 401(k)?",
+    "doc_type": "education",
+    "intent_category": "education_basic",
+    "keywords": ["401k", "401(k)", "employer retirement", "pre-tax", "employer match"],
+    "content": "A 401(k) is an employer-sponsored retirement savings plan that allows employees to contribute pre-tax income, reducing their taxable income today. Many employers match contributions up to a certain percentage — this is essentially free money. In 2025, the employee contribution limit is $23,500. Funds grow tax-deferred until withdrawal in retirement, at which point they are taxed as ordinary income."
+  },
+  {
+    "id": "edu_014",
+    "title": "What is short selling?",
+    "doc_type": "education",
+    "intent_category": "education_basic",
+    "keywords": ["short selling", "shorting", "short position", "borrow shares", "bearish"],
+    "content": "Short selling is a strategy where an investor borrows shares and sells them, hoping to buy them back later at a lower price and pocket the difference. It is a way to profit from a declining stock. However, short selling carries theoretically unlimited risk — if the stock rises instead of falls, losses can exceed the initial investment. It is generally considered an advanced strategy."
+  },
+  {
+    "id": "edu_015",
+    "title": "What is an options contract?",
+    "doc_type": "education",
+    "intent_category": "education_basic",
+    "keywords": ["options", "call option", "put option", "derivatives", "strike price", "expiry"],
+    "content": "An options contract gives the buyer the right, but not the obligation, to buy (call) or sell (put) an underlying asset at a specified price (strike price) before a set expiration date. Options can be used for hedging, income generation (covered calls), or speculation. They are leveraged instruments — small price moves in the underlying can produce large gains or losses in the option."
+  },
+  {
+    "id": "edu_016",
+    "title": "What is the difference between growth and value investing?",
+    "doc_type": "education",
+    "intent_category": "education_basic",
+    "keywords": ["growth investing", "value investing", "growth stocks", "value stocks", "warren buffett"],
+    "content": "Growth investing focuses on companies expected to grow revenues and earnings faster than the market — typically tech or biotech firms with high P/E ratios. Value investing, popularized by Warren Buffett and Benjamin Graham, seeks stocks trading below their intrinsic value — often mature companies with low P/E and high dividends. Growth tends to outperform in bull markets; value tends to be more resilient in downturns."
+  },
+  {
+    "id": "edu_017",
+    "title": "What is a stock market index?",
+    "doc_type": "education",
+    "intent_category": "education_basic",
+    "keywords": ["index", "s&p 500", "dow jones", "nasdaq", "benchmark", "market index"],
+    "content": "A stock market index tracks the performance of a group of stocks representing a segment of the market. The S&P 500 tracks 500 large US companies and is the most widely used benchmark for US equities. The Dow Jones Industrial Average (DJIA) tracks 30 blue-chip companies. The NASDAQ Composite is heavily weighted toward technology. Index funds and ETFs that track these indices offer low-cost broad market exposure."
+  },
+  {
+    "id": "edu_018",
+    "title": "What is asset allocation?",
+    "doc_type": "education",
+    "intent_category": "education_basic",
+    "keywords": ["asset allocation", "portfolio mix", "stocks bonds", "rebalancing", "risk tolerance"],
+    "content": "Asset allocation is the process of dividing a portfolio among different asset classes — stocks, bonds, cash, real estate, commodities — based on your risk tolerance, time horizon, and goals. A common rule of thumb is '100 minus your age' in stocks (e.g. 70% stocks at age 30). Rebalancing periodically restores your target allocation as markets shift. Asset allocation is widely considered the most important driver of long-term portfolio returns."
+  },
+  {
+    "id": "edu_019",
+    "title": "What is a bear market vs a bull market?",
+    "doc_type": "education",
+    "intent_category": "education_basic",
+    "keywords": ["bear market", "bull market", "market cycle", "correction", "rally"],
+    "content": "A bull market is a period of rising stock prices, typically defined as a 20% or more gain from a recent low. A bear market is the opposite — a 20% or more decline from a recent high. Corrections are smaller pullbacks of 10–20%. Bull markets historically last longer than bear markets. The average bull market since 1928 has lasted about 2.7 years; the average bear market about 9.6 months."
+  },
+  {
+    "id": "edu_020",
+    "title": "What is tax-loss harvesting?",
+    "doc_type": "education",
+    "intent_category": "education_basic",
+    "keywords": ["tax loss harvesting", "capital gains", "tax efficiency", "wash sale rule"],
+    "content": "Tax-loss harvesting is the practice of selling investments at a loss to offset capital gains taxes on profitable investments. The losses can offset gains dollar-for-dollar, and up to $3,000 of excess losses can offset ordinary income per year. The wash-sale rule prevents you from buying a substantially identical security within 30 days before or after the sale. Automated tax-loss harvesting is a key feature of many robo-advisors."
   }
 ]

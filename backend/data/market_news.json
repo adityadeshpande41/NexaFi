@@ -64,5 +64,93 @@
     "recency": "today",
     "doc_type": "market_news",
     "summary": "The S&P 500 declined 1.2% after CPI data came in slightly above expectations, reigniting concerns about the Fed's rate path and compressing equity multiples across sectors."
+  },
+  {
+    "id": "news_007",
+    "symbol": "MSFT",
+    "title": "Microsoft Azure AI revenue surges 35% YoY",
+    "source": "Bloomberg",
+    "url": "https://bloomberg.com/mock/msft-azure-ai",
+    "published_date": "2026-03-18",
+    "recency": "recent",
+    "doc_type": "market_news",
+    "summary": "Microsoft reported Azure cloud revenue growth of 35% year-over-year, driven by enterprise AI workloads and Copilot adoption. The beat pushed MSFT shares up 4% in after-hours trading and reinforced the company's position as a top AI infrastructure play."
+  },
+  {
+    "id": "news_008",
+    "symbol": "GOOGL",
+    "title": "Google Gemini Ultra gains enterprise traction",
+    "source": "Reuters",
+    "url": "https://reuters.com/mock/google-gemini-enterprise",
+    "published_date": "2026-03-17",
+    "recency": "recent",
+    "doc_type": "market_news",
+    "summary": "Alphabet's Gemini Ultra model is seeing accelerating enterprise adoption, with over 2,000 companies integrating it into workflows. Analysts raised price targets citing Google's improving AI monetization trajectory and Search resilience."
+  },
+  {
+    "id": "news_009",
+    "symbol": "META",
+    "title": "Meta's Llama 4 open-source release reshapes AI landscape",
+    "source": "The Verge",
+    "url": "https://theverge.com/mock/meta-llama4",
+    "published_date": "2026-03-16",
+    "recency": "recent",
+    "doc_type": "market_news",
+    "summary": "Meta released Llama 4, its most capable open-source model to date, outperforming several closed-source competitors on key benchmarks. The release strengthens Meta's developer ecosystem and could pressure margins at AI API providers."
+  },
+  {
+    "id": "news_010",
+    "symbol": "AMZN",
+    "title": "Amazon AWS expands AI chip lineup with Trainium 3",
+    "source": "CNBC",
+    "url": "https://cnbc.com/mock/aws-trainium3",
+    "published_date": "2026-03-15",
+    "recency": "recent",
+    "doc_type": "market_news",
+    "summary": "Amazon Web Services unveiled Trainium 3, its third-generation custom AI training chip, promising 40% better price-performance than NVIDIA H100s for large model training. The announcement signals AWS's intent to reduce dependency on NVDA hardware."
+  },
+  {
+    "id": "news_011",
+    "symbol": "BTC",
+    "title": "Bitcoin consolidates near $85,000 amid ETF inflow slowdown",
+    "source": "CoinDesk",
+    "url": "https://coindesk.com/mock/btc-consolidation",
+    "published_date": "2026-03-19",
+    "recency": "today",
+    "doc_type": "market_news",
+    "summary": "Bitcoin is trading in a tight range near $85,000 as spot ETF inflows moderate from their January peak. On-chain data shows long-term holders are not selling, suggesting the consolidation may be a healthy pause before the next leg up."
+  },
+  {
+    "id": "news_012",
+    "symbol": "JPM",
+    "title": "JPMorgan raises recession probability to 40%",
+    "source": "Financial Times",
+    "url": "https://ft.com/mock/jpm-recession",
+    "published_date": "2026-03-18",
+    "recency": "recent",
+    "doc_type": "market_news",
+    "summary": "JPMorgan's chief economist raised the 12-month US recession probability to 40%, citing persistent inflation, tightening credit conditions, and slowing consumer spending. The bank recommends increasing allocation to defensive sectors and investment-grade bonds."
+  },
+  {
+    "id": "news_013",
+    "symbol": "GLD",
+    "title": "Gold hits all-time high as safe-haven demand surges",
+    "source": "Reuters",
+    "url": "https://reuters.com/mock/gold-ath",
+    "published_date": "2026-03-19",
+    "recency": "today",
+    "doc_type": "market_news",
+    "summary": "Gold prices surpassed $3,100 per ounce for the first time, driven by central bank buying, geopolitical uncertainty, and investors seeking inflation hedges. Analysts at Goldman Sachs raised their year-end gold target to $3,300."
+  },
+  {
+    "id": "news_014",
+    "symbol": "SPY",
+    "title": "Fed holds rates steady, signals two cuts in 2026",
+    "source": "WSJ",
+    "url": "https://wsj.com/mock/fed-rate-decision",
+    "published_date": "2026-03-19",
+    "recency": "today",
+    "doc_type": "market_news",
+    "summary": "The Federal Reserve held the federal funds rate at 4.25–4.50% at its March meeting, maintaining a cautious stance. The updated dot plot signals two 25bps cuts in 2026, fewer than the market had priced in, causing a brief equity selloff before markets stabilized."
   }
 ]
