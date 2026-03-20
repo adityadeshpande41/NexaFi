@@ -88,15 +88,29 @@ def _clf(context: dict) -> dict:
 
 def _needs_live_data(message: str) -> bool:
     """
-    Returns False for conceptual/definitional queries that don't need
-    real-time prices or news — saves Finnhub calls.
+    Returns False only for purely conceptual/definitional queries with no
+    ticker or time reference — saves Finnhub calls.
     """
     msg = message.lower()
-    conceptual_signals = [
+    # If there's a ticker or time signal, always fetch live data
+    time_signals = ["this week", "today", "yesterday", "this month", "ytd", "this year"]
+    if any(s in msg for s in time_signals):
+        return True
+    from utils import extract_ticker
+    if extract_ticker(message):
+        return True
+    # Pure conceptual queries with no market context
+    conceptual_only = [
         "what is", "what are", "explain", "define", "how does", "how do",
         "teach me", "tell me about", "what does", "meaning of",
     ]
-    return not any(msg.startswith(s) or f" {s} " in msg for s in conceptual_signals)
+    # Only skip live data if the ENTIRE message is conceptual (no market nouns)
+    market_nouns = ["stock", "price", "market", "etf", "equity", "equities", "share", "fund"]
+    has_market_noun = any(n in msg for n in market_nouns)
+    is_purely_conceptual = any(msg.strip().startswith(s) for s in conceptual_only)
+    if is_purely_conceptual and not has_market_noun:
+        return False
+    return True
 
 
 def _should_rag(context: dict, message: str) -> bool:
@@ -196,8 +210,12 @@ def market_agent(message: str, context: dict[str, Any]) -> dict[str, Any]:
     tool_calls = []
 
     if use_live_data:
-        snapshot = get_market_snapshot(ticker, time_range)
-        news_items = get_recent_news(ticker, time_range, limit=5)
+        # Sequential Finnhub calls (ThreadPoolExecutor inside to_thread adds overhead)
+        snapshot   = get_market_snapshot(ticker, time_range)
+        news_items = get_recent_news(ticker, time_range, 3)
+        docs       = retrieve(query=message, kb_name="market", top_k=2,
+                              filters={"symbol": ticker} if ticker != "SPY" else None,
+                              ) if _should_rag(context, message) else []
         tools_used = ["market_snapshot", "news_fetch"]
         tool_calls = [
             {
@@ -220,16 +238,16 @@ def market_agent(message: str, context: dict[str, Any]) -> dict[str, Any]:
         # Extra tickers only for broad queries — cap at 2 to limit API calls
         for t in extra_tickers[:2]:
             extra_news += get_recent_news(t, time_range, limit=2)
-
-    # --- Conditional RAG ---
-    docs = []
-    if _should_rag(context, message):
-        docs = retrieve(
-            query=message,
-            kb_name="market",
-            top_k=3,
-            filters={"symbol": ticker} if ticker != "SPY" else None,
-        )
+    else:
+        # No live data — still do RAG for conceptual queries
+        docs = []
+        if _should_rag(context, message):
+            docs = retrieve(
+                query=message,
+                kb_name="market",
+                top_k=2,
+                filters={"symbol": ticker} if ticker != "SPY" else None,
+            )
 
     all_news = news_items + extra_news
     news_text = "\n".join(

@@ -62,10 +62,14 @@ def _is_compound(message: str) -> bool:
     """
     import re
     compound_signals = [
-        r"\band (also|tell me|explain|show|give me)\b",
-        r"\bplus\b.{5,50}\b(explain|what is|tell me)\b",
-        r"\b(what is|explain).{5,60}\band\b.{5,60}\b(market|portfolio|stock|risk)\b",
-        r"\b(market|portfolio|stock).{5,60}\band\b.{5,60}\b(what is|explain|teach)\b",
+        r"\band (also|tell me|explain|show|give me|teach)\b",
+        r"\bplus\b.{5,50}\b(explain|what is|tell me|teach)\b",
+        r"\b(what is|explain|teach).{5,60}\band\b.{5,60}\b(market|portfolio|stock|risk|price|week|today)\b",
+        r"\b(market|portfolio|stock|price|stocks).{5,60}\band\b.{5,60}\b(what is|explain|teach|about)\b",
+        # "X stocks this week and teach me about Y"
+        r"\bstocks?\b.{3,40}\band\b.{3,40}\b(teach|explain|what is|about)\b",
+        # "teach me about X and also Y market"
+        r"\b(teach|explain|learn).{3,60}\band\b.{3,60}\b(stock|market|price|etf|equity|equities)\b",
     ]
     for pattern in compound_signals:
         if re.search(pattern, message, re.IGNORECASE):
@@ -184,7 +188,7 @@ async def _run_graph(message: str, context: dict[str, Any]) -> dict[str, Any]:
     import re
     intents = [intent] if intent else ["market_explanation"]
     # Add education intent if compound signals present
-    if re.search(r"\b(what is|explain|define|how does|teach me)\b", message, re.IGNORECASE):
+    if re.search(r"\b(what is|explain|define|how does|teach me|about equities|about etf|about stocks)\b", message, re.IGNORECASE):
         if "education_basic" not in intents:
             intents.append("education_basic")
     if re.search(r"\b(my profile|what do you know|assumptions)\b", message, re.IGNORECASE):

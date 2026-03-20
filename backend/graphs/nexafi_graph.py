@@ -164,6 +164,10 @@ def route(state: NexaFiState):
 # Async agent runner — wraps blocking agent in thread pool
 # ---------------------------------------------------------------------------
 
+import time as _time
+import logging as _logging
+_glog = _logging.getLogger("nexafi.graph")
+
 async def _run_agent_async(agent_name: str, state: NexaFiState) -> dict:
     """
     Run a blocking agent function in a thread pool so LangGraph's async
@@ -195,7 +199,9 @@ async def _run_agent_async(agent_name: str, state: NexaFiState) -> dict:
     }
 
     # asyncio.to_thread releases the event loop while the blocking call runs
+    t0 = _time.time()
     result = await asyncio.to_thread(fn, state["message"], context)
+    _glog.warning("AGENT %s took %.2fs", agent_name, _time.time() - t0)
 
     return {
         "agent_outputs": [{
@@ -269,6 +275,71 @@ async def synthesize(state: NexaFiState) -> dict:
             "workflow_card": o["workflow_card"], "agents_used": [o["agent"]],
         }
 
+    # Collect metadata from all agents
+    all_citations, all_tools_used, all_tool_calls = [], [], []
+    used_vector, primary_card = False, None
+    for o in outputs:
+        all_citations.extend(o.get("citations", []))
+        all_tools_used.extend(o.get("tools_used", []))
+        all_tool_calls.extend(o.get("tool_calls", []))
+        if o.get("used_vector_search"):
+            used_vector = True
+        if o.get("workflow_card") and primary_card is None:
+            primary_card = o["workflow_card"]
+
+    # For 2-agent compound queries: skip synthesis LLM — just join with a divider.
+    # This saves ~8-10s. Only use synthesis LLM for 3+ agents where merging is complex.
+    if len(outputs) == 2:
+        _glog.warning("SYNTHESIZE: 2-agent fast join (no LLM)")
+        combined = "\n\n---\n\n".join(o["response"] for o in outputs)
+        # Pre-fetch judge docs in background while we return
+        judge_ref_docs = []
+        try:
+            from graphs.judge_node import _retrieve_reference_docs
+            judge_ref_docs = _retrieve_reference_docs(state["message"], 2)
+        except Exception:
+            pass
+        return {
+            "response": combined,
+            "citations": all_citations,
+            "tools_used": list(set(all_tools_used)),
+            "tool_calls": all_tool_calls,
+            "used_vector_search": used_vector,
+            "workflow_card": primary_card,
+            "agents_used": [o["agent"] for o in outputs],
+            "judge_ref_docs": judge_ref_docs,
+        }
+
+    # 3+ agents: use LLM synthesis
+    agent_outputs_text = "\n\n".join(
+        f"[{o['agent']}]:\n{o['response']}" for o in outputs
+    )
+    prompt = _SYNTHESIS_PROMPT.format(
+        message=state["message"], agent_outputs=agent_outputs_text
+    )
+
+    async def _prefetch_judge_docs():
+        from graphs.judge_node import _retrieve_reference_docs
+        return await asyncio.to_thread(_retrieve_reference_docs, state["message"], 2)
+
+    _t_synth = _time.time()
+    synthesis_result, judge_ref_docs = await asyncio.gather(
+        _synthesis_llm.ainvoke(prompt),
+        _prefetch_judge_docs(),
+    )
+    _glog.warning("SYNTHESIZE (LLM) took %.2fs", _time.time() - _t_synth)
+
+    return {
+        "response": synthesis_result.content.strip(),
+        "citations": all_citations,
+        "tools_used": list(set(all_tools_used)),
+        "tool_calls": all_tool_calls,
+        "used_vector_search": used_vector,
+        "workflow_card": primary_card,
+        "agents_used": [o["agent"] for o in outputs],
+        "judge_ref_docs": judge_ref_docs,
+    }
+
     agent_outputs_text = "\n\n".join(
         f"[{o['agent']}]:\n{o['response']}" for o in outputs
     )
@@ -285,10 +356,12 @@ async def synthesize(state: NexaFiState) -> dict:
             2,
         )
 
+    _t_synth = _time.time()
     synthesis_result, judge_ref_docs = await asyncio.gather(
         _synthesis_llm.ainvoke(prompt),
         _prefetch_judge_docs(),
     )
+    _glog.warning("SYNTHESIZE took %.2fs", _time.time() - _t_synth)
 
     all_citations, all_tools_used, all_tool_calls = [], [], []
     used_vector, primary_card = False, None
@@ -318,6 +391,7 @@ async def synthesize(state: NexaFiState) -> dict:
 # ---------------------------------------------------------------------------
 
 async def judge(state: NexaFiState) -> dict:
+    _t_judge = _time.time()
     from graphs.judge_node import judge_response
     # Pass pre-fetched ref docs so judge skips the embedding call
     result = await asyncio.to_thread(
@@ -327,6 +401,7 @@ async def judge(state: NexaFiState) -> dict:
         state.get("judge_retry_count", 0),
         state.get("judge_ref_docs"),   # pre-fetched during synthesize
     )
+    _glog.warning("JUDGE took %.2fs", _time.time() - _t_judge)
     return {
         "judge_passed":    result["pass"],
         "judge_scores":    result["scores"],
