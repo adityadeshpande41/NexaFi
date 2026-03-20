@@ -1,0 +1,35 @@
+services:
+  # ── 1. Python FastAPI backend ──────────────────────────────────────────────
+  - type: web
+    name: nexafi-backend
+    runtime: python
+    region: oregon
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt && python ingest.py
+    startCommand: uvicorn app:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: FINNHUB_API_KEY
+        sync: false
+      - key: PYTHON_ENV
+        value: production
+
+  # ── 2. Express proxy + static frontend ────────────────────────────────────
+  - type: web
+    name: nexafi-frontend
+    runtime: node
+    region: oregon
+    plan: free
+    buildCommand: corepack enable && pnpm install --frozen-lockfile && PORT=3000 BASE_PATH=/ pnpm --filter @workspace/nexafi run build && pnpm --filter @workspace/api-server run build
+    startCommand: node artifacts/api-server/dist/index.cjs
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "3000"
+      - key: PYTHON_API_URL
+        sync: false   # set to https://nexafi-backend.onrender.com in dashboard
+      - key: STATIC_DIR
+        value: /opt/render/project/src/artifacts/nexafi/dist/public
