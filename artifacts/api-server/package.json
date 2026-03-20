@@ -9,14 +9,12 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@workspace/db": "workspace:*",
-    "@workspace/api-zod": "workspace:*",
-    "drizzle-orm": "catalog:",
     "express": "^5",
     "cookie-parser": "^1.4.7",
     "cors": "^2",
     "pino": "^9",
-    "pino-http": "^10"
+    "pino-http": "^10",
+    "zod": "^3"
   },
   "devDependencies": {
     "@types/node": "catalog:",
