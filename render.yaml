@@ -23,7 +23,7 @@ services:
     region: oregon
     plan: free
     buildCommand: corepack enable && pnpm install --frozen-lockfile && PORT=3000 BASE_PATH=/ pnpm --filter @workspace/nexafi run build && pnpm --filter @workspace/api-server run build
-    startCommand: node artifacts/api-server/dist/index.cjs
+    startCommand: node artifacts/api-server/dist/index.mjs
     envVars:
       - key: NODE_ENV
         value: production
