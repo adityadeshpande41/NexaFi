@@ -4,9 +4,6 @@ import pinoHttp from "pino-http";
 import router from "./routes";
 import { logger } from "./lib/logger";
 import path from "path";
-import { fileURLToPath } from "url";
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const app: Express = express();
 
@@ -37,11 +34,8 @@ app.use("/api", router);
 
 // Serve Vite static build in production
 if (process.env.NODE_ENV === "production") {
-  // STATIC_DIR can be overridden; defaults to sibling dist/public from repo root
-  const staticDir = process.env.STATIC_DIR ||
-    path.resolve(__dirname, "../../artifacts/nexafi/dist/public");
+  const staticDir = process.env.STATIC_DIR || path.resolve("artifacts/nexafi/dist/public");
   app.use(express.static(staticDir));
-  // SPA fallback — all non-API routes serve index.html
   app.get("*", (_req, res) => {
     res.sendFile(path.join(staticDir, "index.html"));
   });
