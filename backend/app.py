@@ -9,12 +9,29 @@ The frontend (running on a separate Replit or localhost:3000) connects to:
     GET  http://localhost:8000/health
 """
 
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routes import router
 from config import ALLOWED_ORIGINS
 
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Warm up ChromaDB collections at startup so first user query isn't slow
+    try:
+        from retriever import _ensure_collection
+        import asyncio, logging
+        logger = logging.getLogger(__name__)
+        for kb in ["education", "support", "retention", "market"]:
+            await asyncio.to_thread(_ensure_collection, kb)
+        logger.info("ChromaDB warmup complete")
+    except Exception as e:
+        import logging
+        logging.getLogger(__name__).warning("ChromaDB warmup failed: %s", e)
+    yield
+
 app = FastAPI(
+    lifespan=lifespan,
     title="NexaFi Backend",
     description="Intent-aware chatbot backend for Nova, NexaFi's AI investing copilot.",
     version="1.0.0",
