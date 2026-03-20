@@ -48,6 +48,7 @@ export const sendMessage = async (
     route: data.route,
     agent_used: data.agent_used,
     tools_used: data.tools_used ?? [],
+    tool_calls: data.tool_calls ?? [],
     used_vector_search: data.used_vector_search ?? false,
     confidence: data.confidence ?? 0,
     latency_ms: data.latency_ms ?? 0,

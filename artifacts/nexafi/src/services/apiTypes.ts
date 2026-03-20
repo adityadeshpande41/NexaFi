@@ -4,6 +4,15 @@ export interface Citation {
   url?: string;
 }
 
+export interface ToolCall {
+  tool: string;
+  api: string;
+  endpoint: string;
+  url: string;
+  params: Record<string, unknown>;
+  description: string;
+}
+
 // State from backend: known/inferred are objects, missing is string[]
 export interface UserState {
   known: Record<string, unknown> | string[];
@@ -32,6 +41,7 @@ export interface ChatResponse {
   route: string;
   agent_used: string;
   tools_used: string[];
+  tool_calls: ToolCall[];
   used_vector_search: boolean;
   confidence: number;
   latency_ms: number;

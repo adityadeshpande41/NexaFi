@@ -141,6 +141,21 @@ def _build_response(
         for c in raw_citations
     ]
 
+    # Tool calls (rich metadata)
+    from models import ToolCall
+    raw_tool_calls = agent_result.get("tool_calls", [])
+    tool_calls = [
+        ToolCall(
+            tool=tc.get("tool", ""),
+            api=tc.get("api", ""),
+            endpoint=tc.get("endpoint", ""),
+            url=tc.get("url", ""),
+            params=tc.get("params", {}),
+            description=tc.get("description", ""),
+        )
+        for tc in raw_tool_calls
+    ]
+
     # Workflow card
     raw_card = agent_result.get("workflow_card")
     workflow_card = None
@@ -157,6 +172,7 @@ def _build_response(
         route=route,
         agent_used=agent_used,
         tools_used=agent_result.get("tools_used", []),
+        tool_calls=tool_calls,
         used_vector_search=agent_result.get("used_vector_search", False),
         confidence=classification.confidence if classification else 1.0,
         latency_ms=now_ms() - start_ms,

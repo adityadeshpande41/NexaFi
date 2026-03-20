@@ -125,6 +125,26 @@ def market_agent(message: str, context: dict[str, Any]) -> dict[str, Any]:
     news_items = get_recent_news(ticker, time_range, limit=5)
     tools_used = ["market_snapshot", "news_fetch"]
 
+    # Rich tool call metadata for the frontend
+    tool_calls = [
+        {
+            "tool": "market_snapshot",
+            "api": "Finnhub",
+            "endpoint": "GET /quote",
+            "url": f"https://finnhub.io/api/v1/quote?symbol={ticker.upper()}",
+            "params": {"symbol": ticker.upper()},
+            "description": f"Fetched real-time price quote for {ticker.upper()} — current price, open, high, low, change %",
+        },
+        {
+            "tool": "news_fetch",
+            "api": "Finnhub",
+            "endpoint": "GET /company-news",
+            "url": f"https://finnhub.io/api/v1/company-news?symbol={ticker.upper()}",
+            "params": {"symbol": ticker.upper(), "time_range": time_range},
+            "description": f"Fetched recent news articles for {ticker.upper()} over the past {time_range}",
+        },
+    ]
+
     docs = retrieve(
         query=message,
         kb_name="market",
@@ -174,6 +194,7 @@ def market_agent(message: str, context: dict[str, Any]) -> dict[str, Any]:
     return {
         "response": response,
         "tools_used": tools_used,
+        "tool_calls": tool_calls,
         "used_vector_search": bool(docs),
         "citations": citations,
         "state": None,

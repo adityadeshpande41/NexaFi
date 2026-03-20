@@ -44,6 +44,16 @@ class WorkflowCard(BaseModel):
     items: list[str] = Field(default_factory=list)
 
 
+class ToolCall(BaseModel):
+    """Metadata about a single external tool invocation."""
+    tool: str                        # e.g. "market_snapshot"
+    api: str                         # e.g. "Finnhub"
+    endpoint: str                    # e.g. "GET /quote"
+    url: str                         # clickable docs/result URL
+    params: dict[str, Any] = Field(default_factory=dict)
+    description: str = ""            # human-readable summary of what was fetched
+
+
 # ---------------------------------------------------------------------------
 # Classification result (internal, also surfaced in system_view)
 # ---------------------------------------------------------------------------
@@ -69,9 +79,10 @@ class ChatResponse(BaseModel):
     route: str
     agent_used: str
     tools_used: list[str] = Field(default_factory=list)
+    tool_calls: list[ToolCall] = Field(default_factory=list)   # rich tool call metadata
     used_vector_search: bool = False
     confidence: float
     latency_ms: int
     citations: list[Citation] = Field(default_factory=list)
-    state: Optional[dict[str, Any]] = None      # profile state, session state, etc.
+    state: Optional[dict[str, Any]] = None
     workflow_card: Optional[WorkflowCard] = None
