@@ -34,7 +34,8 @@ app.use("/api", router);
 
 // Serve Vite static build in production
 if (process.env.NODE_ENV === "production") {
-  const staticDir = process.env.STATIC_DIR || path.resolve("artifacts/nexafi/dist/public");
+  // STATIC_DIR must be set as env var in Render dashboard
+  const staticDir = process.env.STATIC_DIR || path.join(process.cwd(), "artifacts/nexafi/dist/public");
   app.use(express.static(staticDir));
   app.get("*", (_req, res) => {
     res.sendFile(path.join(staticDir, "index.html"));
