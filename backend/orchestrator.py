@@ -187,10 +187,18 @@ async def _run_graph(message: str, context: dict[str, Any]) -> dict[str, Any]:
     # The orchestrator already detected compound — derive both intents from message
     import re
     intents = [intent] if intent else ["market_explanation"]
-    # Add education intent if compound signals present
-    if re.search(r"\b(what is|explain|define|how does|teach me|about equities|about etf|about stocks)\b", message, re.IGNORECASE):
+
+    # Add market intent if message has stock/market/price signals
+    if re.search(r"\b(stock|stocks|price|ticker|market|etf|nasdaq|nyse|s&p|dow|how did|last week|this week|today|yesterday|performance|trading)\b", message, re.IGNORECASE):
+        if "market_explanation" not in intents:
+            intents.append("market_explanation")
+
+    # Add education intent if message has education signals
+    if re.search(r"\b(what is|explain|define|how does|teach me|about equities|about etf|about bonds|about stocks|learn)\b", message, re.IGNORECASE):
         if "education_basic" not in intents:
             intents.append("education_basic")
+
+    # Add profile intent if message has profile signals
     if re.search(r"\b(my profile|what do you know|assumptions)\b", message, re.IGNORECASE):
         if "profile_transparency" not in intents:
             intents.append("profile_transparency")
