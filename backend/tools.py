@@ -10,7 +10,7 @@ from datetime import datetime, timedelta
 from typing import Any
 
 from config import FINNHUB_API_KEY, DATA_DIR
-from utils import load_json
+from utils import load_json, ttl_cache
 
 _FINNHUB_BASE = "https://finnhub.io/api/v1"
 
@@ -41,6 +41,7 @@ def _date_range(time_range: str) -> tuple[str, str]:
 # Market tools
 # ---------------------------------------------------------------------------
 
+@ttl_cache(ttl_seconds=60)
 def get_market_snapshot(symbol: str, time_range: str = "1w") -> dict[str, Any]:
     """
     Fetch a real-time price quote for a ticker via Finnhub.
@@ -67,6 +68,7 @@ def get_market_snapshot(symbol: str, time_range: str = "1w") -> dict[str, Any]:
         return {"error": str(e), "symbol": symbol.upper(), "source": "finnhub_error"}
 
 
+@ttl_cache(ttl_seconds=300)
 def get_recent_news(symbol: str, time_range: str = "1w", limit: int = 5) -> list[dict]:
     """
     Fetch real company news from Finnhub.

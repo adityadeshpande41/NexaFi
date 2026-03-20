@@ -51,7 +51,7 @@ export function InsightsPanel({ systemView, onToggleView, latestResponse }: Insi
   const missing: string[] = latestResponse?.state?.missing ?? [];
 
   return (
-    <aside className="w-80 lg:w-96 flex-shrink-0 border-l border-white/5 bg-background/80 backdrop-blur-3xl flex flex-col h-[calc(100vh-4rem)] relative z-20 shadow-[-10px_0_30px_rgba(0,0,0,0.2)]">
+    <aside style={{ display: "flex", flexDirection: "column", flexShrink: 0, width: "24rem", height: "100%", overflow: "hidden" }} className="border-l border-white/5 bg-background/80 backdrop-blur-3xl relative z-20 shadow-[-10px_0_30px_rgba(0,0,0,0.2)]">
       <div className="p-5 border-b border-white/5 flex flex-col gap-4">
         <h2 className="font-display font-semibold text-lg flex items-center gap-2">
           <Activity className="w-5 h-5 text-accent" /> Copilot Insights
@@ -81,7 +81,7 @@ export function InsightsPanel({ systemView, onToggleView, latestResponse }: Insi
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-5 scroll-smooth">
+      <div style={{ flex: 1, height: 0, overflowY: "auto" }} className="p-5">
         <AnimatePresence mode="wait">
           {!latestResponse ? (
             <motion.div

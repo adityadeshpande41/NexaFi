@@ -87,6 +87,9 @@ _RULES: dict[str, list[str]] = {
         r"\bhow does? (a |an |the )?(stock market|etf|bond|dividend|compound interest) work",
         r"\bdefine\b.{0,30}\b(invest|stock|bond|etf|equity|fund)\b",
         r"\bteach me\b.{0,40}\b(invest|finance|stock|bond)\b",
+        r"\b(learn|learning).{0,30}(finance|invest|concept|topic)\b",
+        r"\bfinance (concept|lesson|topic|education)\b",
+        r"\bbased on my (portfolio|activity|history).{0,30}(teach|explain|concept|learn)\b",
     ],
     "market_explanation": [
         r"\bwhy is\b.{0,40}\b(up|down|falling|rising|dropping|surging|crashing|rallying)\b",
@@ -96,6 +99,16 @@ _RULES: dict[str, list[str]] = {
         r"\bmarket (is |was )?(down|up|falling|rising|volatile|crashing|rallying)\b",
         r"\bwhat.{0,20}(driving|causing|behind).{0,30}(market|stock|price|move|drop|rally)\b",
         r"\bsector (rotation|pullback|selloff|rally)\b",
+        r"\b(weekly|daily|monthly).{0,20}(market|stock|tech).{0,20}(prep|summary|brief|recap|overview|update)\b",
+        r"\bmarket (prep|summary|brief|recap|overview|update)\b",
+        r"\b(watchlist|watch list).{0,30}(adjust|update|change|suggest|recommend)\b",
+        r"\b(top|best|worst).{0,20}(mover|performer|stock|gainer|loser)\b",
+        r"\b(earnings|revenue|guidance).{0,20}(this week|next week|upcoming|calendar)\b",
+        r"\bupcoming earnings\b",
+        r"\bearnings (for|of).{0,20}(my |the )?(holdings|portfolio|stocks|positions)\b",
+        r"\bportfolio.{0,30}(rebalanc|adjust|suggest|recommend|overview|analysis)\b",
+        r"\b(risk|concentration|exposure).{0,30}(audit|check|review|analysis)\b",
+        r"\b(pre.?earnings|earnings brief|earnings prep)\b",
     ],
     "support_issue": [
         r"\b(error|issue|problem|bug|broken|not working|can.t|cannot|unable to)\b",
@@ -155,12 +168,14 @@ def _rule_match(message: str) -> tuple[str | None, float]:
 _LLM_CLASSIFY_PROMPT = """You are an intent classifier for NexaFi, an AI investing copilot.
 
 Classify the user message into exactly one of these intents:
-- education_basic: user wants to learn a finance concept
-- market_explanation: user asks why a stock/market moved
+- education_basic: user wants to learn a finance concept, or asks for a personalised lesson
+- market_explanation: user asks why a stock/market moved, wants a market summary/prep/recap, portfolio analysis, risk audit, earnings briefing, watchlist suggestions, or any market/investing analysis
 - support_issue: user has a product/account problem
 - churn_risk: user is unhappy or wants to leave
 - profile_transparency: user asks what the system knows about them
-- off_topic: unrelated to finance or the NexaFi product
+- off_topic: completely unrelated to finance, investing, or the NexaFi product (e.g. weather, sports, recipes)
+
+IMPORTANT: Any message about market performance, stocks, portfolio, risk, earnings, watchlists, or investing analysis should be classified as market_explanation — NOT off_topic.
 
 Respond with ONLY valid JSON in this exact format:
 {"intent": "<intent>", "confidence": <0.0-1.0>}"""

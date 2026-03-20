@@ -1,6 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import clsx from 'clsx';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { ChatMessage } from '../../services/apiTypes';
 import { CheckCircle2, AlertTriangle, Info, TrendingUp, Headphones, Heart, BarChart2 } from 'lucide-react';
 
@@ -47,12 +49,45 @@ export function MessageBubble({ message }: MessageBubbleProps) {
         isUser ? "items-end" : "items-start"
       )}>
         <div className={clsx(
-          "px-5 py-3.5 text-sm md:text-base whitespace-pre-wrap leading-relaxed shadow-lg",
+          "px-5 py-3.5 text-sm md:text-base leading-relaxed shadow-lg",
           isUser
             ? "bg-gradient-to-br from-primary to-blue-600 text-white rounded-2xl rounded-tr-sm"
             : "bg-card/80 backdrop-blur-md border border-white/10 text-foreground/90 rounded-2xl rounded-tl-sm"
         )}>
-          {message.content}
+          {isUser ? (
+            <span className="whitespace-pre-wrap">{message.content}</span>
+          ) : (
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              components={{
+                h1: ({ children }) => <h1 className="text-lg font-bold font-display mb-2 mt-3 first:mt-0">{children}</h1>,
+                h2: ({ children }) => <h2 className="text-base font-bold font-display mb-2 mt-3 first:mt-0">{children}</h2>,
+                h3: ({ children }) => <h3 className="text-sm font-semibold font-display mb-1.5 mt-2.5 first:mt-0 text-foreground/80">{children}</h3>,
+                p: ({ children }) => <p className="mb-2 last:mb-0 leading-relaxed">{children}</p>,
+                ul: ({ children }) => <ul className="mb-2 space-y-1 pl-1">{children}</ul>,
+                ol: ({ children }) => <ol className="mb-2 space-y-1 pl-4 list-decimal">{children}</ol>,
+                li: ({ children }) => (
+                  <li className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary/60 mt-2 flex-shrink-0" />
+                    <span>{children}</span>
+                  </li>
+                ),
+                strong: ({ children }) => <strong className="font-semibold text-foreground">{children}</strong>,
+                em: ({ children }) => <em className="italic text-foreground/80">{children}</em>,
+                code: ({ children, className }) => {
+                  const isBlock = className?.includes('language-');
+                  return isBlock
+                    ? <code className="block bg-black/40 border border-white/10 rounded-lg px-3 py-2 text-xs font-mono text-primary/90 my-2 overflow-x-auto">{children}</code>
+                    : <code className="bg-black/30 border border-white/10 rounded px-1.5 py-0.5 text-xs font-mono text-primary/90">{children}</code>;
+                },
+                blockquote: ({ children }) => <blockquote className="border-l-2 border-primary/40 pl-3 my-2 text-foreground/70 italic">{children}</blockquote>,
+                hr: () => <hr className="border-white/10 my-3" />,
+                a: ({ href, children }) => <a href={href} target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-2 hover:text-primary/80">{children}</a>,
+              }}
+            >
+              {message.content}
+            </ReactMarkdown>
+          )}
         </div>
 
         {/* Workflow Card */}

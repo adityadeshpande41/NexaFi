@@ -28,8 +28,9 @@ Relevant knowledge base context:
 
 Provide a clear, jargon-free explanation in 2-4 sentences. Use the context above as your primary source. Do not give investment advice."""
 
-MARKET_EXPLANATION_PROMPT = """The user asked about a market event: "{message}"
-Ticker: {ticker} | Time range: {time_range}
+MARKET_EXPLANATION_PROMPT = """The user sent this market/investing query: "{message}"
+
+Primary ticker in focus: {ticker} | Time range: {time_range}
 
 Market snapshot (live data):
 {market_snapshot}
@@ -37,10 +38,19 @@ Market snapshot (live data):
 Recent news:
 {news}
 
-Additional context:
+Additional context from knowledge base:
 {context}
 
-Explain the likely reasons for the price movement in 3-5 sentences. Ground your answer in the data above. Include the most relevant news sources as citations. Do not predict future prices."""
+Instructions:
+- Read the user's query carefully and answer EXACTLY what they asked.
+- If they asked for a weekly market prep / summary: provide last week's performance, key events this week, and watchlist suggestions.
+- If they asked for a portfolio risk audit: discuss concentration, sector exposure, and rebalancing ideas.
+- If they asked about upcoming earnings: summarise the earnings outlook, analyst estimates, and flag risks.
+- If they asked why a stock moved: explain the price movement using the news and snapshot data.
+- For any other market/investing query: answer it directly and specifically.
+- Ground your answer in the data provided. Cite news sources where relevant.
+- Do NOT default to explaining SPY price movement unless that is what was asked.
+- Do not predict future prices or give personalised investment advice."""
 
 SUPPORT_PROMPT = """The user reported a support issue: "{message}"
 

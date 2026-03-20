@@ -6,7 +6,9 @@ import json
 import os
 import re
 import time
+import threading
 from typing import Any
+from functools import wraps
 
 # Common ticker symbols for extraction heuristics
 _TICKER_PATTERN = re.compile(r"\b([A-Z]{1,5})\b")
@@ -69,3 +71,61 @@ def normalize_confidence(raw: float) -> float:
 def now_ms() -> int:
     """Current time in milliseconds (used for latency tracking)."""
     return int(time.time() * 1000)
+
+
+# ---------------------------------------------------------------------------
+# TTL cache — thread-safe, no external deps
+# ---------------------------------------------------------------------------
+
+class _TTLCache:
+    """Simple in-process TTL cache. Evicts stale entries on read."""
+
+    def __init__(self):
+        self._store: dict[str, tuple[Any, float]] = {}
+        self._lock = threading.Lock()
+
+    def get(self, key: str) -> Any:
+        with self._lock:
+            entry = self._store.get(key)
+            if entry is None:
+                return None
+            value, expires_at = entry
+            if time.time() > expires_at:
+                del self._store[key]
+                return None
+            return value
+
+    def set(self, key: str, value: Any, ttl_seconds: int) -> None:
+        with self._lock:
+            self._store[key] = (value, time.time() + ttl_seconds)
+
+    def clear(self) -> None:
+        with self._lock:
+            self._store.clear()
+
+
+_cache = _TTLCache()
+
+
+def ttl_cache(ttl_seconds: int = 60):
+    """
+    Decorator that caches a function's return value for `ttl_seconds`.
+    Cache key is built from the function name + all positional/keyword args.
+    """
+    def decorator(fn):
+        @wraps(fn)
+        def wrapper(*args, **kwargs):
+            key = f"{fn.__name__}:{args}:{sorted(kwargs.items())}"
+            cached = _cache.get(key)
+            if cached is not None:
+                return cached
+            result = fn(*args, **kwargs)
+            # Only cache successful (non-error) results
+            if isinstance(result, dict) and result.get("error"):
+                return result
+            if isinstance(result, list) and result and result[0].get("error"):
+                return result
+            _cache.set(key, result, ttl_seconds)
+            return result
+        return wrapper
+    return decorator

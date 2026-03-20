@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { TopNav } from '../components/layout/TopNav';
 import { Sidebar } from '../components/layout/Sidebar';
 import { ChatArea } from '../components/chat/ChatArea';
@@ -20,6 +20,15 @@ export default function Home() {
   const [recentChats, setRecentChats] = useState<RecentChat[]>([]);
   const [error, setError] = useState<string | null>(null);
   const sessionId = useRef(`session_${Date.now()}`).current;
+
+  // Pick up any pending prompt from workflow "Run Now"
+  useEffect(() => {
+    const pending = sessionStorage.getItem('nexafi_pending_prompt');
+    if (pending) {
+      sessionStorage.removeItem('nexafi_pending_prompt');
+      handleSendMessage(pending);
+    }
+  }, []);
 
   const handleSendMessage = async (text: string) => {
     if (!text.trim() || isLoading) return;
@@ -73,15 +82,15 @@ export default function Home() {
   const sessionMetrics = getSessionMetrics(responses);
 
   return (
-    <div className="flex flex-col min-h-screen bg-background text-foreground overflow-hidden">
+    <div className="flex flex-col h-screen bg-background text-foreground overflow-hidden">
       <TopNav onSendMessage={handleSendMessage} />
-      <div className="flex flex-1 overflow-hidden relative">
+      <div style={{ display: 'flex', flex: 1, height: 0, overflow: 'hidden', alignItems: 'stretch' }}>
         <Sidebar
           onNewChat={handleNewChat}
           recentChats={recentChats}
           onStarterPrompt={handleSendMessage}
         />
-        <div className="flex-1 flex flex-col relative">
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', minHeight: 0, position: 'relative' }}>
           {/* Error banner */}
           {error && (
             <div className="absolute top-4 left-1/2 -translate-x-1/2 z-50 bg-red-500/10 border border-red-500/30 text-red-400 text-sm px-4 py-2 rounded-xl backdrop-blur-md max-w-lg text-center">

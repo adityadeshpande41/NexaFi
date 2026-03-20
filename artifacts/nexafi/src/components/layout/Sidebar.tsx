@@ -16,7 +16,7 @@ const WORKFLOWS = [
 
 export function Sidebar({ onNewChat, recentChats, onStarterPrompt }: SidebarProps) {
   return (
-    <aside className="w-64 flex-shrink-0 border-r border-white/5 bg-card/30 backdrop-blur-md flex flex-col h-[calc(100vh-4rem)] hidden lg:flex">
+    <aside style={{ display: "flex", flexDirection: "column", flexShrink: 0, width: "16rem", height: "100%", overflow: "hidden" }} className="border-r border-white/5 bg-card/30 backdrop-blur-md hidden lg:flex">
       <div className="p-4">
         <button
           onClick={onNewChat}
@@ -27,7 +27,7 @@ export function Sidebar({ onNewChat, recentChats, onStarterPrompt }: SidebarProp
         </button>
       </div>
 
-      <div className="flex-1 overflow-y-auto px-3 py-2 space-y-6">
+      <div style={{ flex: 1, height: 0, overflowY: 'auto' }} className="px-3 py-2 space-y-6">
 
         {/* Recent conversations */}
         {recentChats.length > 0 && (
