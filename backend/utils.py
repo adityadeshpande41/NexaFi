@@ -179,7 +179,16 @@ def ttl_cache(ttl_seconds: int = 60):
 import hashlib
 import pickle
 
-_RESPONSE_CACHE_TTL = 300  # 5 minutes
+# Intent-aware TTL — market data expires fast, education answers last longer
+_CACHE_TTL_BY_INTENT = {
+    "market_explanation":   60,    # 1 min — live prices change constantly
+    "education_basic":      86400, # 24h — "what is a bond" doesn't change
+    "support_issue":        3600,  # 1h
+    "retention_workflow":   3600,  # 1h
+    "profile_transparency": 300,   # 5 min
+    "off_topic":            300,   # 5 min
+}
+_RESPONSE_CACHE_TTL = 300  # default fallback (5 minutes)
 _CACHE_DIR = os.path.join(os.path.dirname(__file__), ".response_cache")
 
 
@@ -213,14 +222,14 @@ def get_cached_response(message: str) -> dict | None:
         return None
 
 
-def set_cached_response(message: str, result: dict) -> None:
-    """Persist an agent result to disk cache."""
+def set_cached_response(message: str, result: dict, intent: str | None = None) -> None:
+    """Persist an agent result to disk cache with intent-aware TTL."""
     key = hashlib.md5(_normalize_message(message).encode()).hexdigest()
     path = _cache_path(key)
     try:
-        # Strip non-serializable objects before pickling
+        ttl = _CACHE_TTL_BY_INTENT.get(intent or "", _RESPONSE_CACHE_TTL)
         safe = {k: v for k, v in result.items() if isinstance(v, (str, int, float, bool, list, dict, type(None)))}
         with open(path, "wb") as f:
-            pickle.dump({"value": safe, "expires_at": time.time() + _RESPONSE_CACHE_TTL}, f)
+            pickle.dump({"value": safe, "expires_at": time.time() + ttl}, f)
     except Exception:
         pass  # cache write failure is non-fatal
