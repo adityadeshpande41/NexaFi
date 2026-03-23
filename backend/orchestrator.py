@@ -166,7 +166,7 @@ async def handle(request: ChatRequest) -> ChatResponse:
         "intent": classification.intent,
         "route": route,
         "agent_used": agent_name,
-    }, intent=classification.intent)
+    })
     return final
 
 
